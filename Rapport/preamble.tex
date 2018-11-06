@@ -18,5 +18,15 @@
 \usepackage[danish]{babel}
 \usepackage[T1]{fontenc}
 
+%4th layer of nesting
+\usepackage{titlesec}
+\setcounter{secnumdepth}{4}
+\titleformat{\paragraph}{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+%Links and clickable ToC
+\usepackage{hyperref}
+
 % Bibliography.
 % \usepackage[options]{natbib}
