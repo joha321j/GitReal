@@ -44,5 +44,14 @@
 % Page number
 \usepackage{lastpage}
 \usepackage{fancyhdr}
-\pagestyle{fancy} 
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Top Left}
+\fancyhead[C]{Top Center}
+\fancyhead[R]{Top Right}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot[L]{Bottom Left}
+\fancyfoot[C]{\thepage}
+\fancyfoot[R]{Bottom Right}
+\renewcommand{\footrulewidth}{0.4pt}
 \cfoot{\thepage\ of \pageref{LastPage}}
