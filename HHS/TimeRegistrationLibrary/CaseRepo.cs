@@ -61,7 +61,10 @@ namespace TimeRegistrationLibrary
 
             AddCase(newStandardCase);
         }
-
+        /// <summary>
+        /// Adds a case to the list of cases
+        /// </summary>
+        /// <param name="caseToAdd"></param>
         private void AddCase(Case caseToAdd)
         {
             cases.Add(caseToAdd);
