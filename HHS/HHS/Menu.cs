@@ -229,9 +229,13 @@ namespace HHS
         /// <param name="caseList"></param>
         private void ShowCaseList(List<KeyValuePair<string, int>> caseList)
         {
+            Console.Clear();
+            Console.WriteLine("List af Oprattede Sager");
+            int i = 1;
             foreach (KeyValuePair<string, int> nameIdPair in caseList)
             {
-                Console.WriteLine(nameIdPair.Key);
+                Console.WriteLine("{0} : " + nameIdPair.Key,i);
+                i++;
             }
         }
         private void SendTimeSheets()

@@ -22,7 +22,7 @@ namespace TimeRegistrationLibrary
                         connection.Open();
 
 
-                        SqlCommand getAllCaseSqlCommand = new SqlCommand("spGetAllCases", connection);
+                        SqlCommand getAllCaseSqlCommand = new SqlCommand("spGetCasesAddressCustomer", connection);
                         getAllCaseSqlCommand.CommandType = CommandType.StoredProcedure;
 
                         SqlDataReader reader = getAllCaseSqlCommand.ExecuteReader();

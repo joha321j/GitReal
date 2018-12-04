@@ -20,14 +20,14 @@ namespace TimeRegistrationLibrary
                     try
                     {
                         connection.Open();
-                        SqlCommand getEmployees = new SqlCommand("spGetAllEmployees", connection);
+                        SqlCommand getEmployees = new SqlCommand("spGetEmployees", connection);
                         getEmployees.CommandType = CommandType.StoredProcedure;
 
                         SqlDataReader reader = getEmployees.ExecuteReader();
                         while (reader.Read())
                         {
-                            CompanyPosition position = (CompanyPosition) Enum.Parse(typeof(CompanyPosition), reader.GetString(1));
-                            Employee employee = new Employee(reader.GetInt32(0), reader.GetString(2), position);
+                            CompanyPosition position = (CompanyPosition) Enum.Parse(typeof(CompanyPosition), reader.GetString(3));
+                            Employee employee = new Employee(reader.GetInt32(0), reader.GetString(1), position);
                             _employees.Add(employee);
                         }
                     }
