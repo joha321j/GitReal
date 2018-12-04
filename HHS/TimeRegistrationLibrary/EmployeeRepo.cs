@@ -10,17 +10,12 @@ namespace TimeRegistrationLibrary
     public class EmployeeRepo
     {
         private readonly List<Employee> _employees = new List<Employee>();
-        public EmployeeRepo()
+        public EmployeeRepo(string loginInformation)
         {
             try
             {
-                string line;
-                using (StreamReader stream = new StreamReader(@"LoginInfo.txt"))
-                {
-                   line  = stream.ReadLine();
-                }
 
-                using (SqlConnection connection = new SqlConnection(line))
+                using (SqlConnection connection = new SqlConnection(loginInformation))
                 {
                     try
                     {

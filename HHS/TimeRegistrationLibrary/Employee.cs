@@ -14,7 +14,7 @@ namespace TimeRegistrationLibrary
     {
         public CompanyPosition PositionInCompany { get; }
         private string Name { get; }
-        int EmployeeId { get; }
+        internal int EmployeeId { get; }
 
         public Employee(int employeeId, string name, CompanyPosition positionInCompany)
         {

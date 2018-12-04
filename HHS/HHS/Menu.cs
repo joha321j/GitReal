@@ -9,8 +9,10 @@ namespace HHS
 {
     class Menu
     {
-        Controller controller = new Controller();
-
+        readonly Controller _controller = new Controller();
+        /// <summary>
+        /// Show the menu and handle the user choice.
+        /// </summary>
         public void Show()
         {
             bool running = true;
@@ -39,25 +41,90 @@ namespace HHS
             }
 
         }
-
+        /// <summary>
+        /// Allow user to do time registration.
+        /// </summary>
         private void TimeRegistration()
         {
-            List<KeyValuePair<string, int>> caseList = controller.GetCaseList();
+            List<KeyValuePair<string, int>> caseList = _controller.GetCaseList();
             ShowCaseList(caseList);
             ChooseCase(caseList);
-            SelectWorkType();
+            KeyValuePair<string, int> userChoice = ShowAndSelectWorkType();
+            EnterWorkHours(userChoice);
 
         }
 
-        private void SelectWorkType()
+        /// <summary>
+        /// Shows and allows the user to select the work type.
+        /// </summary>
+        /// <returns></returns>
+        private KeyValuePair<string, int> ShowAndSelectWorkType()
         {
-            ShowWorkTypes();
+            List<KeyValuePair<string, int>> workTypeList = _controller.GetWorkTypeList();
+            ShowWorkTypes(workTypeList);
+            return SelectWorkType(workTypeList);
         }
 
-        private void ShowWorkTypes()
+        /// <summary>
+        /// Allows user to enter the hours spent on a given work type.
+        /// </summary>
+        /// <param name="workType"></param>
+        private void EnterWorkHours(KeyValuePair<string, int> workType)
+        {
+            double userInput;
+            bool input;
+            printTimeSheet();
+            Console.WriteLine("Hvor mange timer har du brugt på {0} for {1}?", workType.Key,
+                _controller.GetCaseName());
+            do
+            {
+                input = double.TryParse(Console.ReadLine(), out userInput);
+
+            } while (!input);
+
+            _controller.EnterWorkHours(userInput, workType);
+        }
+
+        /// <summary>
+        /// Shows the time sheet for the user for week.
+        /// </summary>
+        private void printTimeSheet()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Makes the user select what work type to work with.
+        /// </summary>
+        /// <param name="workTypeList"></param>
+        /// <returns></returns>
+        private KeyValuePair<string, int> SelectWorkType(List<KeyValuePair<string, int>> workTypeList)
+        {
+            bool input;
+            int userChoice;
+
+            Console.WriteLine("Skriv nummeret, der står ud for den arbejdstype du ønsker og tryk Enter.");
+
+            do
+            {
+                input = int.TryParse(Console.ReadLine(), out userChoice);
+                if (userChoice > workTypeList.Count && userChoice < 0)
+                {
+                    input = false;
+                }
+            } while (!input);
+
+            return workTypeList[userChoice-1];  
+        }
+
+        /// <summary>
+        /// Prints the KeyValuePair list.
+        /// </summary>
+        /// <param name="workTypeList"></param>
+        private void ShowWorkTypes(List<KeyValuePair<string, int>> workTypeList)
         {
             int i = 1;
-            List<KeyValuePair<string, int>> workTypeList = controller.GetWorkTypeList();
+            
 
             Console.WriteLine("Tidsregistrering");
 
@@ -68,6 +135,10 @@ namespace HHS
 
         }
 
+        /// <summary>
+        /// Choose what case you are working on.
+        /// </summary>
+        /// <param name="caseList"></param>
         private void ChooseCase(List<KeyValuePair<string, int>> caseList)
         {
             bool input;
@@ -84,9 +155,12 @@ namespace HHS
 
             } while (!input);
 
-            controller.ChooseCase(caseList[result - 1].Value);
+            _controller.ChooseCase(caseList[result - 1].Value);
         }
 
+        /// <summary>
+        /// Print the menu to the console.
+        /// </summary>
         private void showMenu()
         {
             Console.Clear();
@@ -96,16 +170,23 @@ namespace HHS
             Console.WriteLine("0. Afslut program.");
         }
 
+        /// <summary>
+        /// Shows the list of employees and makes the user choose one.
+        /// </summary>
         private void ShowAndGetEmployee()
         {
             List<Employee> employeeListToChooseFrom = ShowAndGetListOfUsers();
             GetEmployee(employeeListToChooseFrom);
         }
 
+        /// <summary>
+        /// Makes user choose the employee.
+        /// </summary>
+        /// <param name="employeeList"></param>
         private void GetEmployee(List<Employee> employeeList)
         {
             bool input;
-            int userChoice = 0;
+            int userChoice;
 
             Console.WriteLine("Skriv nummeret, der står ud for dit navn og tryk Enter.");
 
@@ -119,15 +200,19 @@ namespace HHS
 
             } while (!input);
 
-            controller.SetEmployee(employeeList, userChoice);
+            _controller.SetEmployee(employeeList, userChoice);
         }
 
+        /// <summary>
+        /// Gets the list of all users and shows them.
+        /// </summary>
+        /// <returns></returns>
         private List<Employee> ShowAndGetListOfUsers()
         {
             Console.WriteLine("Velkommen til HHS - Håndværkernes HåndteringsSystem");
             Console.WriteLine("Vælg hvem du er fra denne liste:");
 
-            List<Employee> employeeListToShow = controller.GetListOfUsers();
+            List<Employee> employeeListToShow = _controller.GetListOfUsers();
             employeeListToShow.OrderBy(e => (int) e.PositionInCompany);
             int i = 1;
             foreach (Employee employee in employeeListToShow)
@@ -138,6 +223,10 @@ namespace HHS
             return employeeListToShow;
         }
 
+        /// <summary>
+        /// Shows all the cases in the given list.
+        /// </summary>
+        /// <param name="caseList"></param>
         private void ShowCaseList(List<KeyValuePair<string, int>> caseList)
         {
             foreach (KeyValuePair<string, int> nameIdPair in caseList)
@@ -147,7 +236,7 @@ namespace HHS
         }
         private void SendTimeSheets()
         {
-            controller.SendTimeSheets();
+            _controller.SendTimeSheets();
         }
     }
 }

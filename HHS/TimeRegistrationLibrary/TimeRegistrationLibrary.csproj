@@ -49,6 +49,7 @@
     <Compile Include="EmployeeRepo.cs" />
     <Compile Include="IBillable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimeSheet.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

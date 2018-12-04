@@ -12,8 +12,8 @@ namespace HHS
     {
         private Employee employee;
         private Case caseToUse;
-        private CaseRepo caseRepo = new CaseRepo();
-        private EmployeeRepo employeeRepo = new EmployeeRepo(); 
+        private CaseRepo caseRepo = new CaseRepo("Server=EALSQL1.eal.local; Database = B_DB30_2018; User Id = B_STUDENT30; Password = B_OPENDB30;");
+        private EmployeeRepo employeeRepo = new EmployeeRepo("Server=EALSQL1.eal.local; Database = B_DB30_2018; User Id = B_STUDENT30; Password = B_OPENDB30;"); 
         public void SendTimeSheets()
         {
            // workerBillable.SendTimeSheets();
@@ -42,6 +42,16 @@ namespace HHS
         public List<KeyValuePair<string, int>> GetWorkTypeList()
         {
             return caseToUse.GetWorkTypeList();
+        }
+
+        public object GetCaseName()
+        {
+            return caseToUse.CaseName;
+        }
+
+        public void EnterWorkHours(double userInput, KeyValuePair<string, int> workType)
+        {
+            caseToUse.EnterWorkHours(workType, userInput, employee);
         }
     }
 }

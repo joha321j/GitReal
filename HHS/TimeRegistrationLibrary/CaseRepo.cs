@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Text;
 
 namespace TimeRegistrationLibrary
@@ -7,9 +9,43 @@ namespace TimeRegistrationLibrary
     public class CaseRepo
     {
         private List<Case> cases = new List<Case>();
-        private List<KeyValuePair<string, int>> standardWorkTypeList = new List<KeyValuePair<string, int>>();
+        private List<KeyValuePair<string, int>> _standardWorkTypeList;
 
-        //TODO: Constructor that connects to database and gets all the cases and the standard work types.
+        public CaseRepo(string loginInformation)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(loginInformation))
+                {
+                    try
+                    {
+                        connection.Open();
+
+
+                        SqlCommand getAllCaseSqlCommand = new SqlCommand("spGetAllCases", connection);
+                        getAllCaseSqlCommand.CommandType = CommandType.StoredProcedure;
+
+                        SqlDataReader reader = getAllCaseSqlCommand.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Address caseAddress = new Address(
+                                reader[0].ToString(), reader[1].ToString(), reader[2].ToString(), reader[3].ToString());
+                            CreateNewCase(reader[4].ToString(), reader[5].ToString(), caseAddress);
+                        }
+
+                    }
+                    catch (SqlException e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                    
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
 
         /// <summary>
         /// Returns all case names and ids that are to be displayed.
@@ -44,10 +80,11 @@ namespace TimeRegistrationLibrary
         /// <param name="customerAddress"></param>
         public void CreateNewCase(string customerName, string customerEmail, Address customerAddress)
         {
-            Case newCase = new Case(customerAddress, customerEmail, customerName, standardWorkTypeList);
+            Case newCase = new Case(customerAddress, customerEmail, customerName, _standardWorkTypeList);
 
             AddCase(newCase);
         }
+
         /// <summary>
         /// Create new case.
         /// </summary>
@@ -55,6 +92,7 @@ namespace TimeRegistrationLibrary
         /// <param name="customerName"></param>
         /// <param name="customerEmail"></param>
         /// <param name="customerAddress"></param>
+        /// <param name="workTypeList"></param>
         public void CreateNewStandardCase(string caseName, string customerName, string customerEmail, Address customerAddress, List<KeyValuePair<string, int>> workTypeList)
         {
             Case newStandardCase = new Case(customerAddress, customerName, customerEmail, caseName, workTypeList);
