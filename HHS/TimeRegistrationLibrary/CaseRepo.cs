@@ -30,7 +30,7 @@ namespace TimeRegistrationLibrary
                         {
                             Address caseAddress = new Address(
                                 reader[0].ToString(), reader[1].ToString(), reader[2].ToString(), reader[3].ToString());
-                            CreateNewCase(reader[4].ToString(), reader[5].ToString(), caseAddress);
+                            CreateCase(reader.GetInt32(4), reader[5].ToString(),reader[6].ToString(),reader[7].ToString(),caseAddress);
                         }
 
                     }
@@ -78,9 +78,9 @@ namespace TimeRegistrationLibrary
         /// <param name="customerName"></param>
         /// <param name="customerEmail"></param>
         /// <param name="customerAddress"></param>
-        public void CreateNewCase(string customerName, string customerEmail, Address customerAddress)
+        public void CreateCase(int caseId, string caseName, string customerName, string customerEmail, Address customerAddress)
         {
-            Case newCase = new Case(customerAddress, customerEmail, customerName, _standardWorkTypeList);
+            Case newCase = new Case(caseId, caseName, customerName, customerEmail, customerAddress, _standardWorkTypeList);
 
             AddCase(newCase);
         }

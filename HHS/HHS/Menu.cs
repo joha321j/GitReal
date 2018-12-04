@@ -231,11 +231,9 @@ namespace HHS
         {
             Console.Clear();
             Console.WriteLine("List af Oprattede Sager");
-            int i = 1;
             foreach (KeyValuePair<string, int> nameIdPair in caseList)
             {
-                Console.WriteLine("{0} : " + nameIdPair.Key,i);
-                i++;
+                Console.WriteLine("{0} : " + nameIdPair.Key, nameIdPair.Value);
             }
         }
         private void SendTimeSheets()

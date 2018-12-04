@@ -31,6 +31,16 @@ namespace TimeRegistrationLibrary
             _workTypeList = workTypeList;
         }
 
+        public Case(int caseId, string caseName, string customerName, string customerEmail, Address customerAddress, List<KeyValuePair<string, int>> workTypeList)
+        {
+            CaseId = caseId;
+            CaseName = caseName;
+            CustomerName = customerName;
+            CustomerEmail = customerEmail;
+            CustomerAddress = customerAddress;
+            _workTypeList = workTypeList;
+        }
+
         public List<KeyValuePair<string, int>> GetWorkTypeList()
         {
             return _workTypeList;
