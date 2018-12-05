@@ -9,7 +9,8 @@ namespace TimeRegistrationLibrary
     public class CaseRepo
     {
         private List<Case> cases = new List<Case>();
-        private List<KeyValuePair<string, int>> _standardWorkTypeList = new List<KeyValuePair<string, int>>();
+        //private List<KeyValuePair<int, string>> _standardWorkTypeList = new List<KeyValuePair<int, string>>();
+
 
         public CaseRepo(string loginInformation)
         {
@@ -25,12 +26,27 @@ namespace TimeRegistrationLibrary
                         SqlCommand getAllCaseSqlCommand = new SqlCommand("spGetCasesAddressCustomer", connection);
                         getAllCaseSqlCommand.CommandType = CommandType.StoredProcedure;
 
+                        SqlCommand getWorkTypeOfCases = new SqlCommand("spGetWorkTypesForCase", connection);
+                        getWorkTypeOfCases.CommandType = CommandType.StoredProcedure;
+
                         SqlDataReader reader = getAllCaseSqlCommand.ExecuteReader();
+
                         while (reader.Read())
                         {
                             Address caseAddress = new Address(
                                 reader[0].ToString(), reader[1].ToString(), reader[2].ToString(), reader[3].ToString());
-                            CreateCase(reader.GetInt32(4), reader[5].ToString(), reader[6].ToString(), reader[7].ToString(), caseAddress);
+
+                            SqlDataReader workTypeReader = getWorkTypeOfCases.ExecuteReader();
+
+                            List<KeyValuePair<int, string>> workTypeList = new List<KeyValuePair<int, string>>();
+                            while (workTypeReader.Read())
+                            {
+                                workTypeList.Add(new KeyValuePair<int, string>(workTypeReader.GetInt32(0), workTypeReader[1].ToString())); 
+                            }
+                            workTypeReader.Close();
+
+
+                            CreateCase(reader.GetInt32(4), reader[5].ToString(), reader[6].ToString(), reader[7].ToString(), caseAddress, workTypeList);
                         }
 
                     }
@@ -43,23 +59,20 @@ namespace TimeRegistrationLibrary
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine("Something goofed "+ e.Message);
             }
-            _standardWorkTypeList.Add(new KeyValuePair<string, int>("Andet", 1));
-            _standardWorkTypeList.Add(new KeyValuePair<string, int>("Sygdom", 2));
-            _standardWorkTypeList.Add(new KeyValuePair<string, int>("Ferie", 3));
         }
 
         /// <summary>
         /// Returns all case names and ids that are to be displayed.
         /// </summary>
-        public List<KeyValuePair<string, int>> GetCaseNameAndId()
+        public List<KeyValuePair<int, string>> GetCaseNameAndId()
         {
-            List<KeyValuePair<string, int>> caseNameIdPairs = new List<KeyValuePair<string, int>>();
+            List<KeyValuePair<int, string>> caseNameIdPairs = new List<KeyValuePair<int, string>>();
 
             foreach (Case caseCase in cases)
             {
-                KeyValuePair<string, int> valuePair = new KeyValuePair<string, int>(caseCase.CaseName, caseCase.CaseId);
+                KeyValuePair<int, string> valuePair = new KeyValuePair<int, string>(caseCase.CaseId, caseCase.CaseName);
                 caseNameIdPairs.Add(valuePair);
             }
 
@@ -81,12 +94,12 @@ namespace TimeRegistrationLibrary
         /// <param name="customerName"></param>
         /// <param name="customerEmail"></param>
         /// <param name="customerAddress"></param>
-        public void CreateCase(int caseId, string caseName, string customerName, string customerEmail, Address customerAddress)
-        {
-            Case newCase = new Case(caseId, caseName, customerName, customerEmail, customerAddress, _standardWorkTypeList);
+        //public void Createcase(int caseid, string casename, string customername, string customeremail, Address customeraddress)
+        //{
+        //    Case newcase = new Case(caseid, casename, customername, customeremail, customeraddress, _standardWorkTypeList);
 
-            AddCase(newCase);
-        }
+        //    AddCase(newcase);
+        //}
 
         /// <summary>
         /// Create new case.
@@ -96,7 +109,7 @@ namespace TimeRegistrationLibrary
         /// <param name="customerEmail"></param>
         /// <param name="customerAddress"></param>
         /// <param name="workTypeList"></param>
-        public void CreateNewStandardCase(string caseName, string customerName, string customerEmail, Address customerAddress, List<KeyValuePair<string, int>> workTypeList)
+        public void CreateCase(int caseId, string caseName, string customerName, string customerEmail, Address customerAddress, List<KeyValuePair<int, string>> workTypeList)
         {
             Case newStandardCase = new Case(customerAddress, customerName, customerEmail, caseName, workTypeList);
 

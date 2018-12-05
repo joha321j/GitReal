@@ -47,10 +47,10 @@ namespace HHS
         /// </summary>
         private void TimeRegistration()
         {
-            List<KeyValuePair<string, int>> caseList = _controller.GetCaseList();
+            List<KeyValuePair<int, string>> caseList = _controller.GetCaseList();
             ShowCaseList(caseList);
             ChooseCase(caseList);
-            KeyValuePair<string, int> userChoice = ShowAndSelectWorkType();
+            KeyValuePair<int, string> userChoice = ShowAndSelectWorkType();
             EnterWorkHours(userChoice);
 
         }
@@ -59,9 +59,9 @@ namespace HHS
         /// Shows and allows the user to select the work type.
         /// </summary>
         /// <returns></returns>
-        private KeyValuePair<string, int> ShowAndSelectWorkType()
+        private KeyValuePair<int, string> ShowAndSelectWorkType()
         {
-            List<KeyValuePair<string, int>> workTypeList = _controller.GetWorkTypeList();
+            List<KeyValuePair<int, string>> workTypeList = _controller.GetWorkTypeList();
             ShowWorkTypes(workTypeList);
             return SelectWorkType(workTypeList);
         }
@@ -70,12 +70,12 @@ namespace HHS
         /// Allows user to enter the hours spent on a given work type.
         /// </summary>
         /// <param name="workType"></param>
-        private void EnterWorkHours(KeyValuePair<string, int> workType)
+        private void EnterWorkHours(KeyValuePair<int, string> workType)
         {
             double userInput;
             bool input;
             printTimeSheet();
-            Console.WriteLine("Hvor mange timer har du brugt på {0} for {1}?", workType.Key,
+            Console.WriteLine("Hvor mange timer har du brugt på {0} for {1}?", workType.Value,
                 _controller.GetCaseName());
             do
             {
@@ -99,7 +99,7 @@ namespace HHS
         /// </summary>
         /// <param name="workTypeList"></param>
         /// <returns></returns>
-        private KeyValuePair<string, int> SelectWorkType(List<KeyValuePair<string, int>> workTypeList)
+        private KeyValuePair<int, string> SelectWorkType(List<KeyValuePair<int, string>> workTypeList)
         {
             bool input;
             int userChoice;
@@ -122,7 +122,7 @@ namespace HHS
         /// Prints the KeyValuePair list.
         /// </summary>
         /// <param name="workTypeList"></param>
-        private void ShowWorkTypes(List<KeyValuePair<string, int>> workTypeList)
+        private void ShowWorkTypes(List<KeyValuePair<int, string>> workTypeList)
         {
             Console.Clear();
             PrintTop();
@@ -134,7 +134,7 @@ namespace HHS
 
             Console.WriteLine("Tidsregistrering");
 
-            foreach (KeyValuePair<string, int> workType in workTypeList)
+            foreach (KeyValuePair<int, string> workType in workTypeList)
             {
                 Console.WriteLine(i + ". " + workType.Key);
                 i++;
@@ -227,7 +227,7 @@ namespace HHS
         /// Choose what case you are working on.
         /// </summary>
         /// <param name="caseList"></param>
-        private void ChooseCase(List<KeyValuePair<string, int>> caseList)
+        private void ChooseCase(List<KeyValuePair<int, string>> caseList)
         {
             bool input;
             int result = 0;
@@ -243,7 +243,7 @@ namespace HHS
 
             } while (!input);
 
-            _controller.ChooseCase(caseList[result - 1].Value);
+            _controller.ChooseCase(caseList[result - 1].Key);
         }
 
         /// <summary>
@@ -315,13 +315,13 @@ namespace HHS
         /// Shows all the cases in the given list.
         /// </summary>
         /// <param name="caseList"></param>
-        private void ShowCaseList(List<KeyValuePair<string, int>> caseList)
+        private void ShowCaseList(List<KeyValuePair<int, string>> caseList)
         {
             Console.Clear();
             Console.WriteLine("List af Oprattede Sager");
-            foreach (KeyValuePair<string, int> nameIdPair in caseList)
+            foreach (KeyValuePair<int, string> nameIdPair in caseList)
             {
-                Console.WriteLine("{0} : " + nameIdPair.Key, nameIdPair.Value);
+                Console.WriteLine("{0} : " + nameIdPair.Value, nameIdPair.Key);
             }
         }
         private void SendTimeSheets()
