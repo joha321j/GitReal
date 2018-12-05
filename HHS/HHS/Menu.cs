@@ -130,6 +130,19 @@ namespace HHS
             PrintCaseName();
             PrintWorkTypes();
             PrintCommentArea();
+            PrintTotalHours();
+
+        }
+
+        private void PrintTotalHours()
+        {
+            string bar = @"+---------------------+-------------------------+";
+            string totalHoursString = @"| Samlet antal timer: |                       ";
+            int totalHours = _controller.GetTimeSheet().GetTotalHours();
+
+            Console.WriteLine(bar);
+            Console.WriteLine("{0}{1,-2}|", totalHoursString, totalHours);
+            Console.WriteLine(bar);
 
         }
 

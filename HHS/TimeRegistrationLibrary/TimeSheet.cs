@@ -55,5 +55,15 @@ namespace TimeRegistrationLibrary
         {
             return Comment;
         }
+
+        public int GetTotalHours()
+        {
+            int sum = 0;
+            foreach (Work work in WorkList)
+            {
+                sum += work.Hours;
+            }
+            return sum;
+        }
     }
 }
