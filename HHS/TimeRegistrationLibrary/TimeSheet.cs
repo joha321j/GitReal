@@ -27,6 +27,7 @@ namespace TimeRegistrationLibrary
         public TimeSheet(int employeeId, List<KeyValuePair<int, string>> workTypes)
         {
             EmployeeId = employeeId;
+            WorkList = new List<Work>();
             foreach (KeyValuePair<int, string> workType in workTypes)
             {
                 Work workToAdd = new Work(workType);
