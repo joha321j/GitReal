@@ -146,10 +146,27 @@ namespace HHS
         {
             string barTitles = @"|          Entrepriser           | Blok | Timer |";
             string bar = @"+--------------------------------+------+-------+";
-
+            List<KeyValuePair<int, string>> workTypeList = _controller.GetWorkTypeList();
             Console.WriteLine(barTitles);
             Console.WriteLine(bar);
 
+            foreach (KeyValuePair<int, string> workType in workTypeList)
+            {
+                string workTypeString = EnsureWorkTypeLength(workType);
+                Console.WriteLine("| Tag inkl. udhæng               |      |       |");
+            }
+
+        }
+
+        private string EnsureWorkTypeLength(KeyValuePair<int, string> workType)
+        {
+            string result = string.Empty;
+            result = " " + workType.Value;
+            for (int i = 0; i < 32 - workType.Value.Length; i++)
+            {
+                result = result + " ";
+            }
+            return result;
         }
 
         private void PrintCaseName()
