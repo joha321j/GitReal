@@ -33,6 +33,9 @@ namespace HHS
                     case "1":
                         TimeRegistration();
                         break;
+                    case "2":
+                        CreateNewStandardCase();
+                        break;
                     default:
                         Console.WriteLine("Ugyldigt valg.");
                         Console.ReadLine();
@@ -42,6 +45,35 @@ namespace HHS
             }
 
         }
+
+        private void CreateNewStandardCase()
+        {
+            string caseName;
+            string custoName;
+            string streetName;
+            string streetNumber;
+            string postCode;
+            string city;
+            string email;
+            Console.WriteLine("Angiv navnet på sagen");
+            caseName = Console.ReadLine();
+            Console.WriteLine("Angiv navnet på kunden");
+            custoName = Console.ReadLine();
+            Console.WriteLine("Angiv Adresse på sagen");
+            Console.WriteLine("Vejnavn: ");
+            streetName = Console.ReadLine();
+            Console.Write("Vej Nummer: ");
+            streetNumber = Console.ReadLine();
+            Console.Write("Postnummer: ");
+            postCode = Console.ReadLine();
+            Console.Write("By Navn: ");
+            city = Console.ReadLine();
+            Console.WriteLine("Angiv email på kunden");
+            email = Console.ReadLine();
+
+            _controller.CreateNewStandardCase(caseName, custoName, streetName, streetNumber, postCode, city, email);
+        }
+
         /// <summary>
         /// Allow user to do time registration.
         /// </summary>

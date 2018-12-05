@@ -9,7 +9,12 @@ namespace TimeRegistrationLibrary
     public class CaseRepo
     {
         private List<Case> cases = new List<Case>();
-        //private List<KeyValuePair<int, string>> _standardWorkTypeList = new List<KeyValuePair<int, string>>();
+        private List<KeyValuePair<int, string>> _standardWorkTypeList = new List<KeyValuePair<int, string>>()
+        {
+            new KeyValuePair<int, string>(1,"Andet"),
+            new KeyValuePair<int, string>(2,"Sygdom"),
+            new KeyValuePair<int, string>(3, "Ferie")
+        };
 
 
         public CaseRepo(string loginInformation)
