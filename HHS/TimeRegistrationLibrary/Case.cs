@@ -10,10 +10,10 @@ namespace TimeRegistrationLibrary
         public string CustomerEmail { get; set; }
         public Address CustomerAddress { get; }
 
-        private readonly List<KeyValuePair<string, int>> _workTypeList;
+        private readonly List<KeyValuePair<int, string>> _workTypeList;
         private readonly List<TimeSheet> timeSheets;
 
-        public Case(Address customerAddress, string customerName, string customerEmail, List<KeyValuePair<string, int>> workTypeList)
+        public Case(Address customerAddress, string customerName, string customerEmail, List<KeyValuePair<int, string>> workTypeList)
         {
             CustomerAddress = customerAddress;
             CustomerEmail = customerEmail;
@@ -22,7 +22,7 @@ namespace TimeRegistrationLibrary
             _workTypeList = workTypeList;
         }
 
-        public Case(Address customerAddress, string customerName, string customerEmail, string caseName, List<KeyValuePair<string, int>> workTypeList)
+        public Case(Address customerAddress, string customerName, string customerEmail, string caseName, List<KeyValuePair<int, string>> workTypeList)
         {
             CaseName = caseName;
             CustomerName = customerName;
@@ -31,7 +31,7 @@ namespace TimeRegistrationLibrary
             _workTypeList = workTypeList;
         }
 
-        public Case(int caseId, string caseName, string customerName, string customerEmail, Address customerAddress, List<KeyValuePair<string, int>> workTypeList)
+        public Case(int caseId, string caseName, string customerName, string customerEmail, Address customerAddress, List<KeyValuePair<int, string>> workTypeList)
         {
             CaseId = caseId;
             CaseName = caseName;
@@ -41,12 +41,12 @@ namespace TimeRegistrationLibrary
             _workTypeList = workTypeList;
         }
 
-        public List<KeyValuePair<string, int>> GetWorkTypeList()
+        public List<KeyValuePair<int, string>> GetWorkTypeList()
         {
             return _workTypeList;
         }
 
-        public void EnterWorkHours(KeyValuePair<string, int> workType, double userInput, Employee employee)
+        public void EnterWorkHours(KeyValuePair<int, string> workType, double userInput, Employee employee)
         {
             TimeSheet timeSheetForEmployee = FindTimeSheetForEmployee(employee);
 

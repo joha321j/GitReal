@@ -19,7 +19,7 @@ namespace HHS
            // workerBillable.SendTimeSheets();
         }
 
-        public List<KeyValuePair<string, int>> GetCaseList()
+        public List<KeyValuePair<int, string>> GetCaseList()
         {
            return caseRepo.GetCaseNameAndId();
         }
@@ -39,7 +39,7 @@ namespace HHS
             caseToUse = caseRepo.GetCase(caseId);
         }
 
-        public List<KeyValuePair<string, int>> GetWorkTypeList()
+        public List<KeyValuePair<int, string>> GetWorkTypeList()
         {
             return caseToUse.GetWorkTypeList();
         }
@@ -49,7 +49,7 @@ namespace HHS
             return caseToUse.CaseName;
         }
 
-        public void EnterWorkHours(double userInput, KeyValuePair<string, int> workType)
+        public void EnterWorkHours(double userInput, KeyValuePair<int, string> workType)
         {
             caseToUse.EnterWorkHours(workType, userInput, employee);
         }
