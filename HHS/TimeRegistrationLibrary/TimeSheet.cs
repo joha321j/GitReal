@@ -22,7 +22,7 @@ namespace TimeRegistrationLibrary
         internal int EmployeeId { get; }
 
         internal List<Work> WorkList;
-
+        internal string Comment { get; private set; }
 
         public TimeSheet(int employeeId, List<KeyValuePair<int, string>> workTypes)
         {
@@ -49,6 +49,11 @@ namespace TimeRegistrationLibrary
         public int GetHoursRegisteredForWorkType(KeyValuePair<int, string> workType)
         {
             return WorkList.Find(work => work.workType.Key == workType.Key).Hours;
+        }
+
+        public string GetComment()
+        {
+            return Comment;
         }
     }
 }

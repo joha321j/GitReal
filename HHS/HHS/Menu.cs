@@ -129,8 +129,48 @@ namespace HHS
             PrintDateAndWeek();
             PrintCaseName();
             PrintWorkTypes();
-            
+            PrintCommentArea();
 
+        }
+
+        private void PrintCommentArea()
+        {
+            TimeSheet timeSheet = _controller.GetTimeSheet();
+            string commentTitle = @"|Kommentar:|                                    |";
+            string commentBoxBar = @"+----------+                                    |";
+            string commentBox = @"|                                               |";
+
+            Console.WriteLine(commentTitle);
+            Console.WriteLine(commentBoxBar);
+            string comment = timeSheet.GetComment();
+            if (Equals(comment, null))
+            {
+                Console.WriteLine(commentBox);
+            }
+            else
+            {
+                List<string> commentList = EnsureCommentWrapping(comment);
+
+                foreach (string line in commentList)
+                {
+                    Console.WriteLine("|{0, -47}|", line);
+                }
+            }
+        }
+
+        private List<string> EnsureCommentWrapping(string comment)
+        {
+            string[] words = comment.Split(' ');
+            List<string> lines = words.Skip(1).Aggregate(words.Take(1).ToList(), (l, w) =>
+            {
+                if (l.Last().Length + w.Length >= 47)
+                    l.Add(w);
+                else
+                    l[l.Count - 1] += " " + w;
+                return l;
+            });
+
+            return lines;
         }
 
         private void PrintWorkTypes()
@@ -146,7 +186,8 @@ namespace HHS
             foreach (KeyValuePair<int, string> workType in workTypeList)
             {
                 string workTypeString = EnsureWorkTypeLength(workType);
-                Console.WriteLine("|{0}.{1}|     {2}|     {3}|", i, workTypeString, timeSheet.GetBlockForWorkType(workType), timeSheet.GetHoursRegisteredForWorkType(workType));
+                Console.WriteLine("|{0}.{1}|    {2, -2}|     {3, -2}|", i, workTypeString, 
+                    timeSheet.GetBlockForWorkType(workType), timeSheet.GetHoursRegisteredForWorkType(workType));
                 Console.WriteLine(bar);
                 i++;
 
