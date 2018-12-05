@@ -9,7 +9,7 @@ namespace TimeRegistrationLibrary
     public class CaseRepo
     {
         private List<Case> cases = new List<Case>();
-        private List<KeyValuePair<string, int>> _standardWorkTypeList;
+        private List<KeyValuePair<string, int>> _standardWorkTypeList = new List<KeyValuePair<string, int>>();
 
         public CaseRepo(string loginInformation)
         {
@@ -30,7 +30,7 @@ namespace TimeRegistrationLibrary
                         {
                             Address caseAddress = new Address(
                                 reader[0].ToString(), reader[1].ToString(), reader[2].ToString(), reader[3].ToString());
-                            CreateCase(reader.GetInt32(4), reader[5].ToString(),reader[6].ToString(),reader[7].ToString(),caseAddress);
+                            CreateCase(reader.GetInt32(4), reader[5].ToString(), reader[6].ToString(), reader[7].ToString(), caseAddress);
                         }
 
                     }
@@ -38,13 +38,16 @@ namespace TimeRegistrationLibrary
                     {
                         Console.WriteLine(e.Message);
                     }
-                    
+
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
+            _standardWorkTypeList.Add(new KeyValuePair<string, int>("Andet", 1));
+            _standardWorkTypeList.Add(new KeyValuePair<string, int>("Sygdom", 2));
+            _standardWorkTypeList.Add(new KeyValuePair<string, int>("Ferie", 3));
         }
 
         /// <summary>
