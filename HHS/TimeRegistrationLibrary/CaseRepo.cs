@@ -27,27 +27,34 @@ namespace TimeRegistrationLibrary
                         getAllCaseSqlCommand.CommandType = CommandType.StoredProcedure;
 
                         SqlCommand getWorkTypeOfCases = new SqlCommand("spGetWorkTypesForCase", connection);
-                        getWorkTypeOfCases.CommandType = CommandType.StoredProcedure;
+                        getWorkTypeOfCases.CommandType = CommandType.StoredProcedure;                       
 
-                        SqlDataReader reader = getAllCaseSqlCommand.ExecuteReader();
 
-                        while (reader.Read())
+                        using (SqlDataReader reader = getAllCaseSqlCommand.ExecuteReader())
                         {
-                            Address caseAddress = new Address(
-                                reader[0].ToString(), reader[1].ToString(), reader[2].ToString(), reader[3].ToString());
-
-                            SqlDataReader workTypeReader = getWorkTypeOfCases.ExecuteReader();
-
+                            
                             List<KeyValuePair<int, string>> workTypeList = new List<KeyValuePair<int, string>>();
-                            while (workTypeReader.Read())
+
+
+                            while (reader.Read())
                             {
-                                workTypeList.Add(new KeyValuePair<int, string>(workTypeReader.GetInt32(0), workTypeReader[1].ToString())); 
+                                getWorkTypeOfCases.Parameters.AddWithValue("@CaseId", reader.GetInt32(4));
+                                Address caseAddress = new Address(
+                                    reader[0].ToString(), reader[1].ToString(), reader[2].ToString(), reader[3].ToString());
+
+                                using (SqlDataReader workTypeReader = getWorkTypeOfCases.ExecuteReader())
+                                {
+
+                                    while (workTypeReader.Read())
+                                    {
+                                        workTypeList.Add(new KeyValuePair<int, string>(workTypeReader.GetInt32(0), workTypeReader[1].ToString()));
+                                    }
+                                }
+
+                                CreateCase(reader.GetInt32(4), reader[5].ToString(), reader[6].ToString(), reader[7].ToString(), caseAddress, workTypeList);
                             }
-                            workTypeReader.Close();
-
-
-                            CreateCase(reader.GetInt32(4), reader[5].ToString(), reader[6].ToString(), reader[7].ToString(), caseAddress, workTypeList);
                         }
+
 
                     }
                     catch (SqlException e)

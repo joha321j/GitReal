@@ -12,7 +12,7 @@ namespace HHS
     {
         private Employee employee;
         private Case caseToUse;
-        private CaseRepo caseRepo = new CaseRepo("Server=EALSQL1.eal.local; Database = B_DB30_2018; User Id = B_STUDENT30; Password = B_OPENDB30;");
+        private CaseRepo caseRepo = new CaseRepo("Server=EALSQL1.eal.local; Database = B_DB30_2018; User Id = B_STUDENT30; Password = B_OPENDB30; MultipleActiveResultSets=True;");
         private EmployeeRepo employeeRepo = new EmployeeRepo("Server=EALSQL1.eal.local; Database = B_DB30_2018; User Id = B_STUDENT30; Password = B_OPENDB30;"); 
         public void SendTimeSheets()
         {
