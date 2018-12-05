@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TimeRegistrationLibrary;
+using System.Globalization;
 
 namespace HHS
 {
@@ -123,6 +124,11 @@ namespace HHS
         /// <param name="workTypeList"></param>
         private void ShowWorkTypes(List<KeyValuePair<string, int>> workTypeList)
         {
+            Console.Clear();
+            PrintTop();
+            PrintDateAndWeek();
+            PrintCaseName();
+            PrintWorkTypes();
             int i = 1;
             
 
@@ -131,8 +137,90 @@ namespace HHS
             foreach (KeyValuePair<string, int> workType in workTypeList)
             {
                 Console.WriteLine(i + ". " + workType.Key);
+                i++;
             }
 
+        }
+
+        private void PrintWorkTypes()
+        {
+            string barTitles = @"|          Entrepriser           | Blok | Timer |";
+            string bar = @"+--------------------------------+------+-------+";
+
+            Console.WriteLine(barTitles);
+            Console.WriteLine(bar);
+
+        }
+
+        private void PrintCaseName()
+        {
+            string bar = @"+--------------------------------+------+-------+";
+            string caseName = _controller.GetCaseName();
+            caseName = EnsureNameLength(caseName);
+            string caseNameBar = @"|Sag/Kunde:";
+
+            Console.WriteLine(caseNameBar + caseName + "|");
+            Console.WriteLine(bar);
+        }
+
+        private string EnsureNameLength(string caseName)
+        {
+            string result = string.Empty;
+            for (int i = 0; i < 36 - caseName.Length; i++)
+            {
+                result = result + " ";
+            }
+            result += caseName + " ";
+            return result;
+        }
+
+        private void PrintDateAndWeek()
+        {
+            DateTime today = DateTime.Now;
+            int weekNumber = GetIso8601WeekOfYear(today);
+            string weekNumberString = checkWeekNumberLength(weekNumber);
+            string bar = @"+-----------------------+-----------------------+";
+            string date = @"|Dato:       " + today.ToString("dd/MM/yyyy ");
+            string week = @"|Uge:                " + weekNumberString +" |";
+
+            Console.WriteLine(bar);
+            Console.WriteLine(date + week);
+            Console.WriteLine(bar);
+        }
+
+        private string checkWeekNumberLength(int weekNumber)
+        {
+            if (weekNumber < 10)
+            {
+                return " " + weekNumber;
+            }
+            else
+            {
+                return weekNumber.ToString();
+            }
+        }
+
+        private static int GetIso8601WeekOfYear(DateTime today)
+        {
+            DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(today);
+            if (day >= DayOfWeek.Monday && day <= DayOfWeek.Wednesday)
+            {
+                today = today.AddDays(3);
+            }
+            return CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(today, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+        }
+
+        private void PrintTop()
+        {
+            string title = @"  _______  _      _                         _       _                     _               
+ |__   __|(_)    | |                       (_)     | |                   (_)              
+    | |    _   __| | ___  _ __  ___   __ _  _  ___ | |_  _ __  ___  _ __  _  _ __    __ _ 
+    | |   | | / _` |/ __|| '__|/ _ \ / _` || |/ __|| __|| '__|/ _ \| '__|| || '_ \  / _` |
+    | |   | || (_| |\__ \| |  |  __/| (_| || |\__ \| |_ | |  |  __/| |   | || | | || (_| |
+    |_|   |_| \__,_||___/|_|   \___| \__, ||_||___/ \__||_|   \___||_|   |_||_| |_| \__, |
+                                      __/ |                                          __/ |
+                                     |___/                                          |___/ ";
+            Console.WriteLine(title);
         }
 
         /// <summary>
