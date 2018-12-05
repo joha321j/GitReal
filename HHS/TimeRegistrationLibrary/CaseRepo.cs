@@ -27,18 +27,18 @@ namespace TimeRegistrationLibrary
                         getAllCaseSqlCommand.CommandType = CommandType.StoredProcedure;
 
                         SqlCommand getWorkTypeOfCases = new SqlCommand("spGetWorkTypesForCase", connection);
-                        getWorkTypeOfCases.CommandType = CommandType.StoredProcedure;                       
+                        getWorkTypeOfCases.CommandType = CommandType.StoredProcedure;
+
 
 
                         using (SqlDataReader reader = getAllCaseSqlCommand.ExecuteReader())
                         {
-                            
-                            List<KeyValuePair<int, string>> workTypeList = new List<KeyValuePair<int, string>>();
 
 
                             while (reader.Read())
                             {
-                                getWorkTypeOfCases.Parameters.Clear();
+                                List<KeyValuePair<int, string>> workTypeList = new List<KeyValuePair<int, string>>();
+
                                 getWorkTypeOfCases.Parameters.AddWithValue("@CaseId", reader.GetInt32(4));
                                 Address caseAddress = new Address(
                                     reader[0].ToString(), reader[1].ToString(), reader[2].ToString(), reader[3].ToString());
@@ -53,7 +53,10 @@ namespace TimeRegistrationLibrary
                                 }
 
                                 CreateCase(reader.GetInt32(4), reader[5].ToString(), reader[6].ToString(), reader[7].ToString(), caseAddress, workTypeList);
+                                getWorkTypeOfCases.Parameters.Clear();
+                                //workTypeList.Clear();
                             }
+
                         }
 
 
@@ -119,7 +122,7 @@ namespace TimeRegistrationLibrary
         /// <param name="workTypeList"></param>
         public void CreateCase(int caseId, string caseName, string customerName, string customerEmail, Address customerAddress, List<KeyValuePair<int, string>> workTypeList)
         {
-            Case newStandardCase = new Case(customerAddress, customerName, customerEmail, caseName, workTypeList);
+            Case newStandardCase = new Case(caseId, caseName, customerName, customerEmail, customerAddress, workTypeList);
 
             AddCase(newStandardCase);
         }
