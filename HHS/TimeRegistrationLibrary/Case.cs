@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TimeRegistrationLibrary
 {
@@ -46,16 +47,25 @@ namespace TimeRegistrationLibrary
             return _workTypeList;
         }
 
-        public void EnterWorkHours(KeyValuePair<int, string> workType, double userInput, Employee employee)
+        public TimeSheet GetTimeSheet(Employee employee)
         {
-            TimeSheet timeSheetForEmployee = FindTimeSheetForEmployee(employee);
-
-            timeSheetForEmployee.EnterWorkHours(workType, userInput);
+            try
+            {
+                return timeSheets.Find(timeSheet => timeSheet.EmployeeId == employee.EmployeeId);
+            }
+            catch (ArgumentNullException)
+            {
+                TimeSheet newTimeSheet = new TimeSheet(employee.EmployeeId, _workTypeList);
+                timeSheets.Add(newTimeSheet);
+                return newTimeSheet;
+            }
         }
 
-        private TimeSheet FindTimeSheetForEmployee(Employee employee)
+        public void EnterWorkHours(KeyValuePair<int, string> workType, double userInput, Employee employee)
         {
-            return timeSheets.Find(t => t.EmployeeId == employee.EmployeeId);
+            TimeSheet timeSheetForEmployee = GetTimeSheet(employee);
+
+            timeSheetForEmployee.EnterWorkHours(workType, userInput);
         }
     }
 }

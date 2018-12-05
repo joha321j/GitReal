@@ -53,6 +53,11 @@ namespace HHS
         {
             caseToUse.EnterWorkHours(workType, userInput, employee);
         }
+
+        internal TimeSheet GetTimeSheet()
+        {
+            return caseToUse.GetTimeSheet(employee);
+        }
     }
 }
     

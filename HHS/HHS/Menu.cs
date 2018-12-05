@@ -129,21 +129,14 @@ namespace HHS
             PrintDateAndWeek();
             PrintCaseName();
             PrintWorkTypes();
-            int i = 1;
             
-
-            Console.WriteLine("Tidsregistrering");
-
-            foreach (KeyValuePair<int, string> workType in workTypeList)
-            {
-                Console.WriteLine(i + ". " + workType.Key);
-                i++;
-            }
 
         }
 
         private void PrintWorkTypes()
         {
+            TimeSheet timeSheet = _controller.GetTimeSheet();
+            int i = 1;
             string barTitles = @"|          Entrepriser           | Blok | Timer |";
             string bar = @"+--------------------------------+------+-------+";
             List<KeyValuePair<int, string>> workTypeList = _controller.GetWorkTypeList();
@@ -153,16 +146,18 @@ namespace HHS
             foreach (KeyValuePair<int, string> workType in workTypeList)
             {
                 string workTypeString = EnsureWorkTypeLength(workType);
-                Console.WriteLine("| Tag inkl. udhæng               |      |       |");
-            }
+                Console.WriteLine("|{0}.{1}|     {2}|     {3}|", i, workTypeString, timeSheet.GetBlockForWorkType(workType), timeSheet.GetHoursRegisteredForWorkType(workType));
+                Console.WriteLine(bar);
+                i++;
 
+            }
         }
 
         private string EnsureWorkTypeLength(KeyValuePair<int, string> workType)
         {
             string result = string.Empty;
             result = " " + workType.Value;
-            for (int i = 0; i < 32 - workType.Value.Length; i++)
+            for (int i = 0; i < 29 - workType.Value.Length; i++)
             {
                 result = result + " ";
             }

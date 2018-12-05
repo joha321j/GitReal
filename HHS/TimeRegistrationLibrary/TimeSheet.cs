@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TimeRegistrationLibrary
 {
-    internal class TimeSheet
+    public class TimeSheet
     {
         
         internal int EmployeeId { get; }
@@ -18,6 +19,16 @@ namespace TimeRegistrationLibrary
         public void EnterWorkHours(KeyValuePair<int, string> workType, double userInput)
         {
             throw new System.NotImplementedException();
+        }
+
+        public int GetBlockForWorkType(KeyValuePair<int, string> workType)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public object GetHoursRegisteredForWorkType(KeyValuePair<int, string> workType)
+        {
+            throw new NotImplementedException();
         }
     }
 }
