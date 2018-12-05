@@ -38,6 +38,7 @@ namespace TimeRegistrationLibrary
 
                             while (reader.Read())
                             {
+                                getWorkTypeOfCases.Parameters.Clear();
                                 getWorkTypeOfCases.Parameters.AddWithValue("@CaseId", reader.GetInt32(4));
                                 Address caseAddress = new Address(
                                     reader[0].ToString(), reader[1].ToString(), reader[2].ToString(), reader[3].ToString());
@@ -59,7 +60,7 @@ namespace TimeRegistrationLibrary
                     }
                     catch (SqlException e)
                     {
-                        Console.WriteLine(e.Message);
+                        Console.WriteLine("Another thing goofed" + e.Message);
                     }
 
                 }
