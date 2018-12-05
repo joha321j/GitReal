@@ -44,7 +44,7 @@ namespace HHS
             return caseToUse.GetWorkTypeList();
         }
 
-        public object GetCaseName()
+        public string GetCaseName()
         {
             return caseToUse.CaseName;
         }
