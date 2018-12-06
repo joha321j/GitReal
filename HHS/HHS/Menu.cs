@@ -10,7 +10,14 @@ namespace HHS
 {
     class Menu
     {
-        readonly Controller _controller = new Controller();
+        private readonly Controller _controller;
+        private TimeRegistrationMenu timeRegistrationMenu;
+
+        public Menu()
+        {
+            _controller = new Controller();
+            timeRegistrationMenu = new TimeRegistrationMenu(_controller);
+        }
         /// <summary>
         /// Show the menu and handle the user choice.
         /// </summary>
@@ -31,7 +38,7 @@ namespace HHS
                         running = false;
                         break;
                     case "1":
-                        TimeRegistration();
+                        timeRegistrationMenu.Show();
                         break;
                     case "2":
                         CreateNewStandardCase();
@@ -46,249 +53,16 @@ namespace HHS
 
         }
 
-        private void CreateNewStandardCase()
-        {
-            string caseName;
-            int custoId;
-            int addressId;
-            Console.WriteLine("Angiv et navn til sag: ");
-            caseName = Console.ReadLine();
-            Console.WriteLine("Angiv et kunde nummer");
-            int.TryParse(Console.ReadLine(), out custoId);
-            Console.WriteLine("Angiv en adresse på sagen");
-            int.TryParse(Console.ReadLine(), out addressId);
-
-          
-            _controller.CreateNewStandardCase(caseName,custoId,addressId);
-            Console.WriteLine("Din sag er nu oprettet");
-            Console.ReadKey();
-        }
-
-        /// <summary>
-        /// Allow user to do time registration.
-        /// </summary>
-        private void TimeRegistration()
-        {
-            List<KeyValuePair<int, string>> caseList = _controller.GetCaseList();
-            ShowCaseList(caseList);
-            ChooseCase(caseList);
-            KeyValuePair<int, string> userChoice = ShowAndSelectWorkType();
-            EnterWorkHours(userChoice);
-
-        }
-
-        /// <summary>
-        /// Shows and allows the user to select the work type.
-        /// </summary>
-        /// <returns></returns>
-        private KeyValuePair<int, string> ShowAndSelectWorkType()
-        {
-            List<KeyValuePair<int, string>> workTypeList = _controller.GetWorkTypeList();
-            ShowWorkTypes(workTypeList);
-            return SelectWorkType(workTypeList);
-        }
-
-        /// <summary>
-        /// Allows user to enter the hours spent on a given work type.
-        /// </summary>
-        /// <param name="workType"></param>
-        private void EnterWorkHours(KeyValuePair<int, string> workType)
-        {
-            double userInput;
-            bool input;
-            printTimeSheet();
-            Console.WriteLine("Hvor mange timer har du brugt på {0} for {1}?", workType.Value,
-                _controller.GetCaseName());
-            do
-            {
-                input = double.TryParse(Console.ReadLine(), out userInput);
-
-            } while (!input);
-
-            _controller.EnterWorkHours(userInput, workType);
-        }
-
-        /// <summary>
-        /// Shows the time sheet for the user for week.
-        /// </summary>
-        private void printTimeSheet()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Makes the user select what work type to work with.
-        /// </summary>
-        /// <param name="workTypeList"></param>
-        /// <returns></returns>
-        private KeyValuePair<int, string> SelectWorkType(List<KeyValuePair<int, string>> workTypeList)
-        {
-            bool input;
-            int userChoice;
-
-            Console.WriteLine("Skriv nummeret, der står ud for den arbejdstype du ønsker og tryk Enter.");
-
-            do
-            {
-                input = int.TryParse(Console.ReadLine(), out userChoice);
-                if (userChoice > workTypeList.Count && userChoice < 0)
-                {
-                    input = false;
-                }
-            } while (!input);
-
-            return workTypeList[userChoice-1];  
-        }
-
-        /// <summary>
-        /// Prints the KeyValuePair list.
-        /// </summary>
-        /// <param name="workTypeList"></param>
-        private void ShowWorkTypes(List<KeyValuePair<int, string>> workTypeList)
-        {
-            Console.Clear();
-            PrintTop();
-            PrintDateAndWeek();
-            PrintCaseName();
-            PrintWorkTypes();
-            
-
-        }
-
-        private void PrintWorkTypes()
-        {
-            TimeSheet timeSheet = _controller.GetTimeSheet();
-            int i = 1;
-            string barTitles = @"|          Entrepriser           | Blok | Timer |";
-            string bar = @"+--------------------------------+------+-------+";
-            List<KeyValuePair<int, string>> workTypeList = _controller.GetWorkTypeList();
-            Console.WriteLine(barTitles);
-            Console.WriteLine(bar);
-
-            foreach (KeyValuePair<int, string> workType in workTypeList)
-            {
-                string workTypeString = EnsureWorkTypeLength(workType);
-                Console.WriteLine("|{0}.{1}|     {2}|     {3}|", i, workTypeString, timeSheet.GetBlockForWorkType(workType), timeSheet.GetHoursRegisteredForWorkType(workType));
-                Console.WriteLine(bar);
-                i++;
-
-            }
-        }
-
-        private string EnsureWorkTypeLength(KeyValuePair<int, string> workType)
-        {
-            string result = string.Empty;
-            result = " " + workType.Value;
-            for (int i = 0; i < 29 - workType.Value.Length; i++)
-            {
-                result = result + " ";
-            }
-            return result;
-        }
-
-        private void PrintCaseName()
-        {
-            string bar = @"+--------------------------------+------+-------+";
-            string caseName = _controller.GetCaseName();
-            caseName = EnsureNameLength(caseName);
-            string caseNameBar = @"|Sag/Kunde:";
-
-            Console.WriteLine(caseNameBar + caseName + "|");
-            Console.WriteLine(bar);
-        }
-
-        private string EnsureNameLength(string caseName)
-        {
-            string result = string.Empty;
-            for (int i = 0; i < 36 - caseName.Length; i++)
-            {
-                result = result + " ";
-            }
-            result += caseName + " ";
-            return result;
-        }
-
-        private void PrintDateAndWeek()
-        {
-            DateTime today = DateTime.Now;
-            int weekNumber = GetIso8601WeekOfYear(today);
-            string weekNumberString = checkWeekNumberLength(weekNumber);
-            string bar = @"+-----------------------+-----------------------+";
-            string date = @"|Dato:       " + today.ToString("dd/MM/yyyy ");
-            string week = @"|Uge:                " + weekNumberString +" |";
-
-            Console.WriteLine(bar);
-            Console.WriteLine(date + week);
-            Console.WriteLine(bar);
-        }
-
-        private string checkWeekNumberLength(int weekNumber)
-        {
-            if (weekNumber < 10)
-            {
-                return " " + weekNumber;
-            }
-            else
-            {
-                return weekNumber.ToString();
-            }
-        }
-
-        private static int GetIso8601WeekOfYear(DateTime today)
-        {
-            DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(today);
-            if (day >= DayOfWeek.Monday && day <= DayOfWeek.Wednesday)
-            {
-                today = today.AddDays(3);
-            }
-            return CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(today, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
-        }
-
-        private void PrintTop()
-        {
-            string title = @"  _______  _      _                         _       _                     _               
- |__   __|(_)    | |                       (_)     | |                   (_)              
-    | |    _   __| | ___  _ __  ___   __ _  _  ___ | |_  _ __  ___  _ __  _  _ __    __ _ 
-    | |   | | / _` |/ __|| '__|/ _ \ / _` || |/ __|| __|| '__|/ _ \| '__|| || '_ \  / _` |
-    | |   | || (_| |\__ \| |  |  __/| (_| || |\__ \| |_ | |  |  __/| |   | || | | || (_| |
-    |_|   |_| \__,_||___/|_|   \___| \__, ||_||___/ \__||_|   \___||_|   |_||_| |_| \__, |
-                                      __/ |                                          __/ |
-                                     |___/                                          |___/ ";
-            Console.WriteLine(title);
-        }
-
-        /// <summary>
-        /// Choose what case you are working on.
-        /// </summary>
-        /// <param name="caseList"></param>
-        private void ChooseCase(List<KeyValuePair<int, string>> caseList)
-        {
-            bool input;
-            int result = 0;
-            Console.WriteLine("Vælg hvilken sag, du skal tidsregistrere for.");
-
-            do
-            {
-                input = int.TryParse(Console.ReadLine(), out result);
-                if (result > caseList.Count && result < 0)
-                {
-                    input = false;
-                }
-
-            } while (!input);
-
-            _controller.ChooseCase(caseList[result - 1].Key);
-        }
-
         /// <summary>
         /// Print the menu to the console.
         /// </summary>
         private void showMenu()
         {
             Console.Clear();
-            Console.WriteLine("Velkommen til HHS - Håndværkernes HåndteringsSystem");
+            Console.WriteLine("Hovedmenu");
             Console.WriteLine();
-            Console.WriteLine("1. Begynd timeregistrering.");
+            Console.WriteLine("Vælg hvad du vil gøre:");
+            Console.WriteLine("1. Timeregistrering.");
             Console.WriteLine("2. Oprat ny sag");
             Console.WriteLine("0. Afslut program.");
         }
@@ -316,9 +90,10 @@ namespace HHS
             do
             {
                 input = int.TryParse(Console.ReadLine(), out userChoice);
-                if (userChoice > employeeList.Count && userChoice < 0)
+                if (userChoice > employeeList.Count || userChoice < 1)
                 {
                     input = false;
+                    Console.WriteLine("Ugyldigt valg.");
                 }
 
             } while (!input);
@@ -333,6 +108,7 @@ namespace HHS
         private List<Employee> ShowAndGetListOfUsers()
         {
             Console.WriteLine("Velkommen til HHS - Håndværkernes HåndteringsSystem");
+            Console.WriteLine();
             Console.WriteLine("Vælg hvem du er fra denne liste:");
 
             List<Employee> employeeListToShow = _controller.GetListOfUsers();
@@ -344,24 +120,6 @@ namespace HHS
                 i++;
             }
             return employeeListToShow;
-        }
-
-        /// <summary>
-        /// Shows all the cases in the given list.
-        /// </summary>
-        /// <param name="caseList"></param>
-        private void ShowCaseList(List<KeyValuePair<int, string>> caseList)
-        {
-            Console.Clear();
-            Console.WriteLine("List af Oprattede Sager");
-            foreach (KeyValuePair<int, string> nameIdPair in caseList)
-            {
-                Console.WriteLine("{0} : " + nameIdPair.Value, nameIdPair.Key);
-            }
-        }
-        private void SendTimeSheets()
-        {
-            _controller.SendTimeSheets();
         }
     }
 }

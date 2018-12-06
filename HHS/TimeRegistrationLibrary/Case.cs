@@ -34,6 +34,7 @@ namespace TimeRegistrationLibrary
 
         public Case(int caseId, string caseName, string customerName, string customerEmail, Address customerAddress, List<KeyValuePair<int, string>> workTypeList)
         {
+            timeSheets = new List<TimeSheet>();
             CaseId = caseId;
             CaseName = caseName;
             CustomerName = customerName;
@@ -49,16 +50,19 @@ namespace TimeRegistrationLibrary
 
         public TimeSheet GetTimeSheet(Employee employee)
         {
-            try
+            TimeSheet timeSheetToReturn = timeSheets.Find(timeSheet => timeSheet.EmployeeId == employee.EmployeeId);
+            if (timeSheetToReturn == null)
             {
-                return timeSheets.Find(timeSheet => timeSheet.EmployeeId == employee.EmployeeId);
+                timeSheetToReturn = new TimeSheet(employee.EmployeeId, _workTypeList);
+                timeSheets.Add(timeSheetToReturn);
             }
-            catch (ArgumentNullException)
-            {
-                TimeSheet newTimeSheet = new TimeSheet(employee.EmployeeId, _workTypeList);
-                timeSheets.Add(newTimeSheet);
-                return newTimeSheet;
-            }
+            return timeSheetToReturn;
+        }
+
+        public void EnterWorkComment(string userComment, Employee employee)
+        {
+            TimeSheet timeSheetForEmployee = GetTimeSheet(employee);
+            timeSheetForEmployee.Comment = userComment;
         }
 
         public void EnterWorkHours(KeyValuePair<int, string> workType, double userInput, Employee employee)
