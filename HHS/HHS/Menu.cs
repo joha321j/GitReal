@@ -49,9 +49,15 @@ namespace HHS
         {
             List<KeyValuePair<int, string>> caseList = _controller.GetCaseList();
             ShowCaseList(caseList);
-            ChooseCase(caseList);
-            KeyValuePair<int, string> userChoice = ShowAndSelectWorkType();
-            EnterWorkHours(userChoice);
+            if (ChooseCase(caseList))
+            {
+                KeyValuePair<int, string> userChoice = ShowAndSelectWorkType();
+                EnterWorkHours(userChoice);
+            }
+            else
+            {
+                return;
+            }
 
         }
 
@@ -284,7 +290,7 @@ namespace HHS
         /// Choose what case you are working on.
         /// </summary>
         /// <param name="caseList"></param>
-        private void ChooseCase(List<KeyValuePair<int, string>> caseList)
+        private bool ChooseCase(List<KeyValuePair<int, string>> caseList)
         {
             bool input;
             int result = 0;
@@ -293,14 +299,21 @@ namespace HHS
             do
             {
                 input = int.TryParse(Console.ReadLine(), out result);
-                if (result > caseList.Count && result < 0)
+                if (result > caseList.Count || result < 0)
                 {
                     input = false;
                 }
 
             } while (!input);
-
-            _controller.ChooseCase(caseList[result - 1].Key);
+            if (result == 0)
+            {
+                return false;
+            }
+            else
+            {
+                _controller.ChooseCase(caseList[result - 1].Key);
+                return true;
+            }
         }
 
         /// <summary>
@@ -311,6 +324,7 @@ namespace HHS
             Console.Clear();
             Console.WriteLine("Velkommen til HHS - Håndværkernes HåndteringsSystem");
             Console.WriteLine();
+            Console.WriteLine("Hovedmenu");
             Console.WriteLine("1. Begynd timeregistrering.");
             Console.WriteLine("0. Afslut program.");
         }
@@ -341,7 +355,7 @@ namespace HHS
                 if (userChoice > employeeList.Count || userChoice < 1)
                 {
                     input = false;
-                    Console.WriteLine("Det var ikke et gyldigt input.");
+                    Console.WriteLine("Ugyldigt valg.");
                 }
 
             } while (!input);
@@ -356,6 +370,7 @@ namespace HHS
         private List<Employee> ShowAndGetListOfUsers()
         {
             Console.WriteLine("Velkommen til HHS - Håndværkernes HåndteringsSystem");
+            Console.WriteLine();
             Console.WriteLine("Vælg hvem du er fra denne liste:");
 
             List<Employee> employeeListToShow = _controller.GetListOfUsers();
@@ -379,8 +394,9 @@ namespace HHS
             Console.WriteLine("Liste af oprettede sager");
             foreach (KeyValuePair<int, string> nameIdPair in caseList)
             {
-                Console.WriteLine("{0} : " + nameIdPair.Value, nameIdPair.Key);
+                Console.WriteLine("{0}. " + nameIdPair.Value, nameIdPair.Key);
             }
+            Console.WriteLine("0. Afslut timeregistering og gå tilbage til hovedmenu");
         }
         private void SendTimeSheets()
         {
