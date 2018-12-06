@@ -124,8 +124,9 @@ namespace HHS
             do
             {
                 input = int.TryParse(Console.ReadLine(), out userChoice);
-                if (userChoice > workTypeList.Count)
+                if (userChoice > workTypeList.Count || input == false)
                 {
+                    Console.WriteLine("Ugyldigt valg.");
                     input = false;
                 }
                 else if (userChoice == 0)
