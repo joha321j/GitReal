@@ -85,14 +85,6 @@ namespace HHS
             _controller.EnterWorkHours(userInput, workType);
         }
 
-        ///// <summary>
-        ///// Shows the time sheet for the user for week.
-        ///// </summary>
-        //private void printTimeSheet()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         /// <summary>
         /// Makes the user select what work type to work with.
         /// </summary>
