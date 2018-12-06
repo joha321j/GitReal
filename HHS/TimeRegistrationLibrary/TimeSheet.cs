@@ -9,7 +9,7 @@ namespace TimeRegistrationLibrary
         {
             internal KeyValuePair<int, string> workType { get; private set; }
             internal int Block { get; private set; }
-            internal int Hours { get; private set; }
+            internal double Hours { get; private set; }
 
             public Work(KeyValuePair<int, string> workType, int block = 0, int hours = 0)
             {
@@ -46,7 +46,7 @@ namespace TimeRegistrationLibrary
             return WorkList.Find(work => work.workType.Key == workType.Key).Block;
         }
 
-        public int GetHoursRegisteredForWorkType(KeyValuePair<int, string> workType)
+        public double GetHoursRegisteredForWorkType(KeyValuePair<int, string> workType)
         {
             return WorkList.Find(work => work.workType.Key == workType.Key).Hours;
         }
@@ -56,9 +56,9 @@ namespace TimeRegistrationLibrary
             return Comment;
         }
 
-        public int GetTotalHours()
+        public double GetTotalHours()
         {
-            int sum = 0;
+            double sum = 0;
             foreach (Work work in WorkList)
             {
                 sum += work.Hours;

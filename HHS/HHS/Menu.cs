@@ -74,7 +74,6 @@ namespace HHS
         {
             double userInput;
             bool input;
-            printTimeSheet();
             Console.WriteLine("Hvor mange timer har du brugt på {0} for {1}?", workType.Value,
                 _controller.GetCaseName());
             do
@@ -86,13 +85,13 @@ namespace HHS
             _controller.EnterWorkHours(userInput, workType);
         }
 
-        /// <summary>
-        /// Shows the time sheet for the user for week.
-        /// </summary>
-        private void printTimeSheet()
-        {
-            throw new NotImplementedException();
-        }
+        ///// <summary>
+        ///// Shows the time sheet for the user for week.
+        ///// </summary>
+        //private void printTimeSheet()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         /// <summary>
         /// Makes the user select what work type to work with.
@@ -138,7 +137,7 @@ namespace HHS
         {
             string bar = @"+---------------------+-------------------------+";
             string totalHoursString = @"| Samlet antal timer: |                       ";
-            int totalHours = _controller.GetTimeSheet().GetTotalHours();
+            double totalHours = _controller.GetTimeSheet().GetTotalHours();
 
             Console.WriteLine(bar);
             Console.WriteLine("{0}{1,-2}|", totalHoursString, totalHours);
@@ -209,7 +208,7 @@ namespace HHS
 
         private string EnsureWorkTypeLength(KeyValuePair<int, string> workType)
         {
-            string result = string.Empty;
+            string result;
             result = " " + workType.Value;
             for (int i = 0; i < 29 - workType.Value.Length; i++)
             {
@@ -384,7 +383,7 @@ namespace HHS
         private void ShowCaseList(List<KeyValuePair<int, string>> caseList)
         {
             Console.Clear();
-            Console.WriteLine("List af Oprattede Sager");
+            Console.WriteLine("Liste af oprettede sager");
             foreach (KeyValuePair<int, string> nameIdPair in caseList)
             {
                 Console.WriteLine("{0} : " + nameIdPair.Value, nameIdPair.Key);
