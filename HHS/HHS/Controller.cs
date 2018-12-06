@@ -58,6 +58,11 @@ namespace HHS
         {
             return caseToUse.GetTimeSheet(employee);
         }
+
+        internal void EnterWorkComment(string userComment)
+        {
+            caseToUse.EnterWorkComment(userComment, employee);
+        }
     }
 }
     

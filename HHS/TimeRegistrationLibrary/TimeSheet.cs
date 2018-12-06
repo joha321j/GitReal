@@ -22,7 +22,7 @@ namespace TimeRegistrationLibrary
         internal int EmployeeId { get; }
 
         internal List<Work> WorkList;
-        internal string Comment { get; private set; }
+        internal string Comment { get; set; }
 
         public TimeSheet(int employeeId, List<KeyValuePair<int, string>> workTypes)
         {

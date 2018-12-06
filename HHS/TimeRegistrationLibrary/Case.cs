@@ -59,6 +59,12 @@ namespace TimeRegistrationLibrary
             return timeSheetToReturn;
         }
 
+        public void EnterWorkComment(string userComment, Employee employee)
+        {
+            TimeSheet timeSheetForEmployee = GetTimeSheet(employee);
+            timeSheetForEmployee.Comment = userComment;
+        }
+
         public void EnterWorkHours(KeyValuePair<int, string> workType, double userInput, Employee employee)
         {
             TimeSheet timeSheetForEmployee = GetTimeSheet(employee);

@@ -98,6 +98,12 @@ namespace HHS
             } while (!input);
 
             _controller.EnterWorkHours(userInput, workType);
+            if (workType.Key == 1)
+            {
+                Console.WriteLine("Tilføj kommentar til, hvad du har lavet.");
+                string userComment = Console.ReadLine();
+                _controller.EnterWorkComment(userComment);
+            }
         }
 
         /// <summary>
@@ -111,6 +117,7 @@ namespace HHS
             int userChoice;
             keepRunning = true;
 
+            Console.WriteLine();
             Console.WriteLine("Skriv nummeret, der står ud for den arbejdstype du ønsker og tryk Enter.");
             Console.WriteLine("Tryk 0 for at afslutte og vende tilbage til sagsoversigten.");
 
@@ -310,7 +317,6 @@ namespace HHS
         {
             bool input;
             int result = 0;
-            Console.WriteLine("Vælg hvilken sag, du skal tidsregistrere for.");
 
             do
             {
@@ -338,9 +344,9 @@ namespace HHS
         private void showMenu()
         {
             Console.Clear();
-            Console.WriteLine("Velkommen til HHS - Håndværkernes HåndteringsSystem");
-            Console.WriteLine();
             Console.WriteLine("Hovedmenu");
+            Console.WriteLine();
+            Console.WriteLine("Vælg hvad du vil gøre:");
             Console.WriteLine("1. Begynd timeregistrering.");
             Console.WriteLine("0. Afslut program.");
         }
@@ -408,10 +414,14 @@ namespace HHS
         {
             Console.Clear();
             Console.WriteLine("Liste af oprettede sager");
+            Console.WriteLine();
+            Console.WriteLine("Vælg hvilken sag, du skal tidsregistrere for:");
+
             foreach (KeyValuePair<int, string> nameIdPair in caseList)
             {
                 Console.WriteLine("{0}. " + nameIdPair.Value, nameIdPair.Key);
             }
+            Console.WriteLine();
             Console.WriteLine("0. Afslut timeregistering og gå tilbage til hovedmenu");
         }
         private void SendTimeSheets()
