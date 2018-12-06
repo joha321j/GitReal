@@ -49,29 +49,19 @@ namespace HHS
         private void CreateNewStandardCase()
         {
             string caseName;
-            string custoName;
-            string streetName;
-            string streetNumber;
-            string postCode;
-            string city;
-            string email;
-            Console.WriteLine("Angiv navnet på sagen");
+            int custoId;
+            int addressId;
+            Console.WriteLine("Angiv et navn til sag: ");
             caseName = Console.ReadLine();
-            Console.WriteLine("Angiv navnet på kunden");
-            custoName = Console.ReadLine();
-            Console.WriteLine("Angiv Adresse på sagen");
-            Console.WriteLine("Vejnavn: ");
-            streetName = Console.ReadLine();
-            Console.Write("Vej Nummer: ");
-            streetNumber = Console.ReadLine();
-            Console.Write("Postnummer: ");
-            postCode = Console.ReadLine();
-            Console.Write("By Navn: ");
-            city = Console.ReadLine();
-            Console.WriteLine("Angiv email på kunden");
-            email = Console.ReadLine();
+            Console.WriteLine("Angiv et kunde nummer");
+            int.TryParse(Console.ReadLine(), out custoId);
+            Console.WriteLine("Angiv en adresse på sagen");
+            int.TryParse(Console.ReadLine(), out addressId);
 
-            _controller.CreateNewStandardCase(caseName, custoName, streetName, streetNumber, postCode, city, email);
+          
+            _controller.CreateNewStandardCase(caseName,custoId,addressId);
+            Console.WriteLine("Din sag er nu oprettet");
+            Console.ReadKey();
         }
 
         /// <summary>
@@ -299,6 +289,7 @@ namespace HHS
             Console.WriteLine("Velkommen til HHS - Håndværkernes HåndteringsSystem");
             Console.WriteLine();
             Console.WriteLine("1. Begynd timeregistrering.");
+            Console.WriteLine("2. Oprat ny sag");
             Console.WriteLine("0. Afslut program.");
         }
 

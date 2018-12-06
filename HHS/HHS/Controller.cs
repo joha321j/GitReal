@@ -45,6 +45,12 @@ namespace HHS
             return caseToUse.GetWorkTypeList();
         }
 
+        internal void CreateNewStandardCase(string caseName, int custoId, int addressId)
+        {
+            int id = caseRepo.CreateNewStandardCase(caseName,custoId,addressId,connectionString);
+            caseRepo.addStandardWorkTypes(id,connectionString);
+        }
+
         public string GetCaseName()
         {
             return caseToUse.CaseName;
@@ -58,11 +64,6 @@ namespace HHS
         internal TimeSheet GetTimeSheet()
         {
             return caseToUse.GetTimeSheet(employee);
-        }
-
-        internal void CreateNewStandardCase(string caseName, string custoName, string streetName, string streetNumber, string postCode, string city, string email)
-        {
-            caseRepo.CreateCase();
         }
     }
 }

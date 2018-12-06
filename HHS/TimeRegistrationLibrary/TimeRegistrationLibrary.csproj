@@ -45,6 +45,7 @@
     <Compile Include="Carpenter.cs" />
     <Compile Include="Case.cs" />
     <Compile Include="CaseRepo.cs" />
+    <Compile Include="CustomerRepo.cs" />
     <Compile Include="Employee.cs" />
     <Compile Include="EmployeeRepo.cs" />
     <Compile Include="IBillable.cs" />
