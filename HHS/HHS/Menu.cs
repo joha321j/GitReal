@@ -53,6 +53,20 @@ namespace HHS
 
         }
 
+        private void CreateNewStandardCase()
+        {
+            Console.WriteLine("Angiv et navn på sagen: ");
+            string caseName = Console.ReadLine();
+            Console.WriteLine("Angiv et kunde nummer");
+            int.TryParse(Console.ReadLine(), out int custoId);
+            Console.WriteLine("Angiv en Adresse");
+            int.TryParse(Console.ReadLine(), out int addressId);
+
+            _controller.CreateNewStandardCase(caseName, custoId, addressId);
+
+            Console.WriteLine("Din sag er nu oprettet");
+        }
+
         /// <summary>
         /// Print the menu to the console.
         /// </summary>
