@@ -317,13 +317,14 @@ namespace HHS
         private bool ChooseCase(List<KeyValuePair<int, string>> caseList)
         {
             bool input;
-            int result = 0;
+            int result;
 
             do
             {
                 input = int.TryParse(Console.ReadLine(), out result);
-                if (result > caseList.Count || result < 0)
+                if (result > caseList.Count || result < 0 || input == false)
                 {
+                    Console.WriteLine("Ugyldigt valg.");
                     input = false;
                 }
 
@@ -332,11 +333,8 @@ namespace HHS
             {
                 return false;
             }
-            else
-            {
-                _controller.ChooseCase(caseList[result - 1].Key);
-                return true;
-            }
+            _controller.ChooseCase(caseList[result - 1].Key);
+            return true;
         }
 
         /// <summary>
