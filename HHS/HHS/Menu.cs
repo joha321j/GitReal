@@ -117,10 +117,5 @@ namespace HHS
             }
             return employeeListToShow;
         }
-
-        private void SendTimeSheets()
-        {
-            _controller.SendTimeSheets();
-        }
     }
 }
