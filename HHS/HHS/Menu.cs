@@ -100,7 +100,7 @@ namespace HHS
             do
             {
                 input = int.TryParse(Console.ReadLine(), out userChoice);
-                if (userChoice > workTypeList.Count && userChoice < 0)
+                if (userChoice > workTypeList.Count && userChoice < 1)
                 {
                     input = false;
                 }
@@ -338,9 +338,10 @@ namespace HHS
             do
             {
                 input = int.TryParse(Console.ReadLine(), out userChoice);
-                if (userChoice > employeeList.Count && userChoice < 0)
+                if (userChoice > employeeList.Count || userChoice < 1)
                 {
                     input = false;
+                    Console.WriteLine("Det var ikke et gyldigt input.");
                 }
 
             } while (!input);
