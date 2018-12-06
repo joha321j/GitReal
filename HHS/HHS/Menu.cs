@@ -47,29 +47,38 @@ namespace HHS
         /// </summary>
         private void TimeRegistration()
         {
-            List<KeyValuePair<int, string>> caseList = _controller.GetCaseList();
-            ShowCaseList(caseList);
-            if (ChooseCase(caseList))
+            bool timeRegistrationRunning = true;
+            while (timeRegistrationRunning)
             {
-                KeyValuePair<int, string> userChoice = ShowAndSelectWorkType();
-                EnterWorkHours(userChoice);
-            }
-            else
-            {
-                return;
-            }
+                List<KeyValuePair<int, string>> caseList = _controller.GetCaseList();
+                ShowCaseList(caseList);
+                timeRegistrationRunning = ChooseCase(caseList);
+                if (timeRegistrationRunning)
+                {
+                    bool keepRunning;
+                    do
+                    {
+                        KeyValuePair<int, string> userChoice = ShowAndSelectWorkType(out keepRunning);
+                        if (userChoice.Key != 0)
+                        {
+                            EnterWorkHours(userChoice);
+                        }
 
+
+                    } while (keepRunning);
+                }
+            }
         }
 
         /// <summary>
         /// Shows and allows the user to select the work type.
         /// </summary>
         /// <returns></returns>
-        private KeyValuePair<int, string> ShowAndSelectWorkType()
+        private KeyValuePair<int, string> ShowAndSelectWorkType(out bool keepRunning)
         {
             List<KeyValuePair<int, string>> workTypeList = _controller.GetWorkTypeList();
             ShowWorkTypes(workTypeList);
-            return SelectWorkType(workTypeList);
+            return SelectWorkType(workTypeList, out keepRunning);
         }
 
         /// <summary>
@@ -96,19 +105,26 @@ namespace HHS
         /// </summary>
         /// <param name="workTypeList"></param>
         /// <returns></returns>
-        private KeyValuePair<int, string> SelectWorkType(List<KeyValuePair<int, string>> workTypeList)
+        private KeyValuePair<int, string> SelectWorkType(List<KeyValuePair<int, string>> workTypeList, out bool keepRunning)
         {
             bool input;
             int userChoice;
+            keepRunning = true;
 
             Console.WriteLine("Skriv nummeret, der står ud for den arbejdstype du ønsker og tryk Enter.");
+            Console.WriteLine("Tryk 0 for at afslutte og vende tilbage til sagsoversigten.");
 
             do
             {
                 input = int.TryParse(Console.ReadLine(), out userChoice);
-                if (userChoice > workTypeList.Count && userChoice < 1)
+                if (userChoice > workTypeList.Count)
                 {
                     input = false;
+                }
+                else if (userChoice == 0)
+                {
+                    keepRunning = false;
+                    return new KeyValuePair<int, string>(0,string.Empty);
                 }
             } while (!input);
 
