@@ -10,13 +10,17 @@ namespace HHS
 {
     internal class TimeRegistrationMenu
     {
-        private Controller _controller;
+        private readonly Controller _controller;
 
         public TimeRegistrationMenu(Controller controller)
         {
             _controller = controller;
         }
-        public void TimeRegistration()
+
+        /// <summary>
+        /// Allow user to do time registration.
+        /// </summary>
+        private void TimeRegistration()
         {
             bool timeRegistrationRunning = true;
             while (timeRegistrationRunning)
@@ -326,5 +330,45 @@ namespace HHS
 
         }
 
+        public void Show()
+        {
+            bool running = true;
+
+            while (running)
+            {
+                showMenu();
+
+                string userInput = Console.ReadLine();
+
+                switch (userInput)
+                {
+                    case "1":
+                        TimeRegistration();
+                        break;
+                    case "2":
+                        SendTimeSheets();
+                        break;
+                    default:
+                        Console.WriteLine("Ugyldigt valg.");
+                        Console.ReadLine();
+                        break;
+                }
+            }
+        }
+
+        private void showMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("Timeregistreringsmenu");
+            Console.WriteLine();
+            Console.WriteLine("Vælg hvad du vil gøre:");
+            Console.WriteLine("1. Indtast timer");
+            Console.WriteLine("2. Send timeseddel");
+        }
+
+        private void SendTimeSheets()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

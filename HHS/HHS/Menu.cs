@@ -38,7 +38,7 @@ namespace HHS
                         running = false;
                         break;
                     case "1":
-                        timeRegistrationMenu.TimeRegistration();
+                        timeRegistrationMenu.Show();
                         break;
                     default:
                         Console.WriteLine("Ugyldigt valg.");
@@ -49,9 +49,6 @@ namespace HHS
             }
 
         }
-        /// <summary>
-        /// Allow user to do time registration.
-        /// </summary>
 
         /// <summary>
         /// Print the menu to the console.
@@ -62,7 +59,7 @@ namespace HHS
             Console.WriteLine("Hovedmenu");
             Console.WriteLine();
             Console.WriteLine("Vælg hvad du vil gøre:");
-            Console.WriteLine("1. Begynd timeregistrering.");
+            Console.WriteLine("1. Timeregistrering.");
             Console.WriteLine("0. Afslut program.");
         }
 
