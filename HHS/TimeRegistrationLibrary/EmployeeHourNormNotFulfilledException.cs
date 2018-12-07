@@ -8,22 +8,13 @@ namespace TimeRegistrationLibrary
 {
     public class EmployeeHourNormNotFulfilledException : Exception
     {
+        public double HourNorm { get; }
+        public double HoursEntered { get; }
+
         public EmployeeHourNormNotFulfilledException(double hourNorm, double hoursEntered )
         {
             HourNorm = hourNorm;
             HoursEntered = hoursEntered;
         }
-
-        public EmployeeHourNormNotFulfilledException(string message) : base(message)
-        {
-        }
-
-        public EmployeeHourNormNotFulfilledException(string message, Exception innerException) : base(message,
-            innerException)
-        {
-        }
-
-        public double HourNorm { get; private set; }
-        public double HoursEntered { get; private set; }
     }
 }
