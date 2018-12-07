@@ -336,7 +336,7 @@ namespace HHS
 
             while (running)
             {
-                showMenu();
+                ShowMenu();
 
                 string userInput = Console.ReadLine();
 
@@ -356,7 +356,7 @@ namespace HHS
             }
         }
 
-        private void showMenu()
+        private void ShowMenu()
         {
             Console.Clear();
             Console.WriteLine("Timeregistreringsmenu");
@@ -368,9 +368,37 @@ namespace HHS
 
         private void SendTimeSheets()
         {
+            bool running = true;
+            Console.Clear();
             Console.WriteLine("Ønsker du at indsende dine timesedler?");
+            Console.WriteLine("1. Ja");
+            Console.WriteLine("2. Hvor mange timer har jeg registreret?");
+            Console.WriteLine("0. Vend tilbage til timeregistreringsmenuen.");
 
-            _controller.SendTimeSheets();
+            do
+            {
+                switch (Console.ReadLine())
+                {
+                    case "1":
+                        _controller.SendTimeSheets();
+                        break;
+                    case "2":
+                        ShowTotalHoursRegisteredForEmployee();
+                        break;
+                    case "0":
+                        running = false;
+                        break;
+                    default:
+                        Console.WriteLine("Ugyldigt valg.");
+                        Console.ReadLine();
+                        break;
+                }
+            } while (running);
+        }
+
+        private void ShowTotalHoursRegisteredForEmployee()
+        {
+            throw new NotImplementedException();
         }
     }
 }
