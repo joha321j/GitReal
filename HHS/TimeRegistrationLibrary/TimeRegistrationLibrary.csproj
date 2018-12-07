@@ -42,13 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="address.cs" />
-    <Compile Include="Carpenter.cs" />
     <Compile Include="Case.cs" />
     <Compile Include="CaseRepo.cs" />
     <Compile Include="CustomerRepo.cs" />
     <Compile Include="Employee.cs" />
     <Compile Include="EmployeeRepo.cs" />
-    <Compile Include="IBillable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimeSheet.cs" />
   </ItemGroup>
