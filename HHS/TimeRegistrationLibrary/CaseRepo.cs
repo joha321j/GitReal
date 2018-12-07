@@ -8,8 +8,8 @@ namespace TimeRegistrationLibrary
 {
     public class CaseRepo
     {
-        private List<Case> _cases = new List<Case>();
-        private List<KeyValuePair<int, string>> _standardWorkTypeList = new List<KeyValuePair<int, string>>()
+        private readonly List<Case> _cases = new List<Case>();
+        private readonly List<KeyValuePair<int, string>> _standardWorkTypeList = new List<KeyValuePair<int, string>>()
         {
             new KeyValuePair<int, string>(1,"Andet"),
             new KeyValuePair<int, string>(2,"Sygdom"),
@@ -120,7 +120,7 @@ namespace TimeRegistrationLibrary
         /// <param name="customerEmail"></param>
         /// <param name="customerAddress"></param>
         /// <param name="workTypeList"></param>
-        public void CreateCase(int caseId, string caseName, string customerName, string customerEmail, Address customerAddress, List<KeyValuePair<int, string>> workTypeList)
+        private void CreateCase(int caseId, string caseName, string customerName, string customerEmail, Address customerAddress, List<KeyValuePair<int, string>> workTypeList)
         {
             Case newStandardCase = new Case(caseId, caseName, customerName, customerEmail, customerAddress, workTypeList);
 

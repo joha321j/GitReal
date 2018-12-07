@@ -14,23 +14,24 @@ namespace TimeRegistrationLibrary
         private readonly List<KeyValuePair<int, string>> _workTypeList;
         private readonly List<TimeSheet> _timeSheets;
 
-        public Case(Address customerAddress, string customerName, string customerEmail, List<KeyValuePair<int, string>> workTypeList)
-        {
-            CustomerAddress = customerAddress;
-            CustomerEmail = customerEmail;
-            CustomerName = customerName;
-            CaseName = customerName + customerEmail;
-            _workTypeList = workTypeList;
-        }
 
-        public Case(Address customerAddress, string customerName, string customerEmail, string caseName, List<KeyValuePair<int, string>> workTypeList)
-        {
-            CaseName = caseName;
-            CustomerName = customerName;
-            CustomerEmail = customerEmail;
-            CustomerAddress = customerAddress;
-            _workTypeList = workTypeList;
-        }
+        //public Case(Address customerAddress, string customerName, string customerEmail, List<KeyValuePair<int, string>> workTypeList)
+        //{
+        //    CustomerAddress = customerAddress;
+        //    CustomerEmail = customerEmail;
+        //    CustomerName = customerName;
+        //    CaseName = customerName + customerEmail;
+        //    _workTypeList = workTypeList;
+        //}
+
+        //public Case(Address customerAddress, string customerName, string customerEmail, string caseName, List<KeyValuePair<int, string>> workTypeList)
+        //{
+        //    CaseName = caseName;
+        //    CustomerName = customerName;
+        //    CustomerEmail = customerEmail;
+        //    CustomerAddress = customerAddress;
+        //    _workTypeList = workTypeList;
+        //}
 
         public Case(int caseId, string caseName, string customerName, string customerEmail, Address customerAddress, List<KeyValuePair<int, string>> workTypeList)
         {
