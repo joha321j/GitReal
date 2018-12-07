@@ -201,7 +201,7 @@ namespace HHS
         {
             DateTime today = DateTime.Now;
             int weekNumber = GetIso8601WeekOfYear(today);
-            string weekNumberString = checkWeekNumberLength(weekNumber);
+            string weekNumberString = CheckWeekNumberLength(weekNumber);
             string bar = @"+-----------------------+-----------------------+";
             string date = @"|Dato:       " + today.ToString("dd/MM/yyyy ");
             string week = @"|Uge:                " + weekNumberString + " |";
@@ -221,7 +221,7 @@ namespace HHS
             return CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(today, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
         }
 
-        private string checkWeekNumberLength(int weekNumber)
+        private string CheckWeekNumberLength(int weekNumber)
         {
             if (weekNumber < 10)
             {
