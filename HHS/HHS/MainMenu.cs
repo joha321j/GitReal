@@ -78,6 +78,7 @@ namespace HHS
             Console.WriteLine("Vælg hvad du vil gøre:");
             Console.WriteLine("1. Timeregistrering.");
             Console.WriteLine("2. Oprat ny sag");
+            Console.WriteLine();
             Console.WriteLine("0. Afslut program.");
         }
 

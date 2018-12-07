@@ -15,6 +15,7 @@ namespace TimeRegistrationLibrary
         public CompanyPosition PositionInCompany { get; }
         private string Name { get; }
         internal int EmployeeId { get; }
+        public double HourNorm { get; set; }
 
         public Employee(int employeeId, string name, CompanyPosition positionInCompany)
         {

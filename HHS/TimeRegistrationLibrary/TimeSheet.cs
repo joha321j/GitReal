@@ -8,7 +8,7 @@ namespace TimeRegistrationLibrary
         internal class Work
         {
             internal KeyValuePair<int, string> WorkType { get; private set; }
-            internal int Block { get; private set; }
+            internal int Block { get; set; }
             internal double Hours { get; set; }
 
             public Work(KeyValuePair<int, string> workType, int block = 0, int hours = 0)
@@ -36,10 +36,10 @@ namespace TimeRegistrationLibrary
            
         }
 
-        public void EnterWorkHours(KeyValuePair<int, string> workType, double userInput)
+        public void EnterWorkHours(KeyValuePair<int, string> workType, double userInput, int userInputBlock)
         {
             Work work = GetWork(workType.Key);
-
+            work.Block = userInputBlock;
             work.Hours += userInput;
         }
 

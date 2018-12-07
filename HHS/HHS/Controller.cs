@@ -56,9 +56,9 @@ namespace HHS
             return _caseToUse.CaseName;
         }
 
-        public void EnterWorkHours(double userInput, KeyValuePair<int, string> workType)
+        public void EnterWorkHours(double userInput, int userInputBlock, KeyValuePair<int, string> workType)
         {
-            _caseToUse.EnterWorkHours(workType, userInput, _employee);
+            _caseToUse.EnterWorkHours(workType, userInputBlock, userInput, _employee);
         }
 
         internal TimeSheet GetTimeSheet()
@@ -69,6 +69,11 @@ namespace HHS
         internal void EnterWorkComment(string userComment)
         {
             _caseToUse.EnterWorkComment(userComment, _employee);
+        }
+
+        public double GetTotalHoursRegisteredForEmployee()
+        {
+            return _caseRepo.GetTotalHoursRegisteredForEmployee(_employee);
         }
     }
 }

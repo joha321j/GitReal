@@ -202,9 +202,26 @@ namespace TimeRegistrationLibrary
             }
         }
 
+        /// <summary>
+        /// Establish connection to database given in string loginInformation, and send all timesheets for employee.
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <param name="loginInformation"></param>
+        /// <exception cref="EmployeeHourNormNotFulfilledException"></exception>
+        /// <exception cref="SqlException"></exception>
         public void SendTimeSheets(Employee employee, string loginInformation)
         {
             List<TimeSheet> timeSheetsToSend = GetTimeSheets(employee);
+            double totalHours = 0;
+            foreach (TimeSheet timeSheet in timeSheetsToSend)
+            {
+                totalHours += timeSheet.GetTotalHours();
+            }
+
+            if (totalHours < employee.HourNorm)
+            {
+                throw new EmployeeHourNormNotFulfilledException(employee.HourNorm, totalHours);
+            }
 
             using (SqlConnection connection = new SqlConnection(loginInformation))
             {
@@ -237,6 +254,20 @@ namespace TimeRegistrationLibrary
             }
 
             return resultList;
+        }
+
+        public double GetTotalHoursRegisteredForEmployee(Employee employee)
+        {
+            double totalHours = 0;
+
+            List<TimeSheet> timeSheets = GetTimeSheets(employee);
+
+            foreach (TimeSheet timeSheet in timeSheets)
+            {
+                totalHours += timeSheet.GetTotalHours();
+            }
+
+            return totalHours;
         }
     }
 }

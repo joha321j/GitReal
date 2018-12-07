@@ -65,11 +65,11 @@ namespace TimeRegistrationLibrary
             timeSheetForEmployee.Comment = userComment;
         }
 
-        public void EnterWorkHours(KeyValuePair<int, string> workType, double userInput, Employee employee)
+        public void EnterWorkHours(KeyValuePair<int, string> workType, int userInputBlock, double userInput, Employee employee)
         {
             TimeSheet timeSheetForEmployee = GetTimeSheet(employee);
 
-            timeSheetForEmployee.EnterWorkHours(workType, userInput);
+            timeSheetForEmployee.EnterWorkHours(workType, userInput, userInputBlock);
         }
     }
 }

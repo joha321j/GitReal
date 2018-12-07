@@ -61,7 +61,7 @@ namespace HHS
                 Console.WriteLine("{0}. " + nameIdPair.Value, nameIdPair.Key);
             }
             Console.WriteLine();
-            Console.WriteLine("0. Afslut timeregistering og gå tilbage til hovedmenu");
+            Console.WriteLine("0. Afslut indtastning af timer og gå tilbage til timeregistreringsmenu");
         }
 
         /// <summary>
@@ -157,7 +157,16 @@ namespace HHS
         private void EnterWorkHours(KeyValuePair<int, string> workType)
         {
             double userInput;
+            int userInputBlock;
             bool input;
+            Console.WriteLine("Hvilken blok har du arbejdet på for {0}", _controller.GetCaseName());
+
+            do
+            {
+                input = int.TryParse(Console.ReadLine(), out userInputBlock);
+
+            } while (!input);
+
             Console.WriteLine("Hvor mange timer har du brugt på {0} for {1}?", workType.Value,
                 _controller.GetCaseName());
             do
@@ -166,7 +175,7 @@ namespace HHS
 
             } while (!input);
 
-            _controller.EnterWorkHours(userInput, workType);
+            _controller.EnterWorkHours(userInput, userInputBlock, workType);
             if (workType.Key == 1)
             {
                 Console.WriteLine("Tilføj kommentar til, hvad du har lavet.");
@@ -342,11 +351,17 @@ namespace HHS
 
                 switch (userInput)
                 {
+                    case "0":
+                        running = false;
+                        break;
                     case "1":
                         TimeRegistration();
                         break;
                     case "2":
-                        SendTimeSheets();
+                        ShowTotalHoursRegisteredForEmployee();
+                        break;
+                    case "3":
+                        SendTimeSheetsMenu();
                         break;
                     default:
                         Console.WriteLine("Ugyldigt valg.");
@@ -363,16 +378,18 @@ namespace HHS
             Console.WriteLine();
             Console.WriteLine("Vælg hvad du vil gøre:");
             Console.WriteLine("1. Indtast timer");
-            Console.WriteLine("2. Send timeseddel");
+            Console.WriteLine("2. Se antal registrerede timer.");
+            Console.WriteLine("3. Send timeseddel");
+            Console.WriteLine();
+            Console.WriteLine("0. Vend tilbage til hovedmenu.");
         }
 
-        private void SendTimeSheets()
+        private void SendTimeSheetsMenu()
         {
             bool running = true;
             Console.Clear();
             Console.WriteLine("Ønsker du at indsende dine timesedler?");
             Console.WriteLine("1. Ja");
-            Console.WriteLine("2. Hvor mange timer har jeg registreret?");
             Console.WriteLine("0. Vend tilbage til timeregistreringsmenuen.");
 
             do
@@ -380,10 +397,7 @@ namespace HHS
                 switch (Console.ReadLine())
                 {
                     case "1":
-                        _controller.SendTimeSheets();
-                        break;
-                    case "2":
-                        ShowTotalHoursRegisteredForEmployee();
+                        SendTimeSheets();
                         break;
                     case "0":
                         running = false;
@@ -396,9 +410,24 @@ namespace HHS
             } while (running);
         }
 
+        private void SendTimeSheets()
+        {
+            try
+            {
+                _controller.SendTimeSheets();
+            }
+            catch (EmployeeHourNormNotFulfilledException e)
+            {
+                Console.WriteLine("Du har ikke indtastet nok timer! Din timenorm er på {0}, men du har kun indtastet {1} timer.", e.HourNorm, e.HoursEntered);
+            }
+        }
+
         private void ShowTotalHoursRegisteredForEmployee()
         {
-            throw new NotImplementedException();
+            double totalHours = _controller.GetTotalHoursRegisteredForEmployee();
+
+            Console.WriteLine("Du har {0} timer stående i tidsregistreringssystemet, der ikke er indsendt.", totalHours);
+            Console.ReadLine();
         }
     }
 }
