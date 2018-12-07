@@ -8,7 +8,7 @@ using TimeRegistrationLibrary;
 
 namespace HHS
 {
-    internal class TimeRegistrationMenu
+    internal class TimeRegistrationMenu: IMenu
     {
         private readonly Controller _controller;
 

@@ -11,9 +11,9 @@ namespace HHS
     {
         static void Main(string[] args)
         {
-            Menu menu = new Menu();
+            MainMenu mainMenu = new MainMenu();
 
-            menu.Show();
+            mainMenu.Show();
         }
 
     }

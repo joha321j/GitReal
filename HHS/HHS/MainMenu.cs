@@ -8,12 +8,12 @@ using System.Globalization;
 
 namespace HHS
 {
-    class Menu
+    class MainMenu : IMenu
     {
         private readonly Controller _controller;
         private TimeRegistrationMenu timeRegistrationMenu;
 
-        public Menu()
+        public MainMenu()
         {
             _controller = new Controller();
             timeRegistrationMenu = new TimeRegistrationMenu(_controller);
@@ -135,5 +135,10 @@ namespace HHS
             }
             return employeeListToShow;
         }
+    }
+
+    internal interface IMenu
+    {
+        void Show();
     }
 }
