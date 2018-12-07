@@ -201,5 +201,42 @@ namespace TimeRegistrationLibrary
                 Console.WriteLine("Something goofed " + e.Message);
             }
         }
+
+        public void SendTimeSheets(Employee employee, string loginInformation)
+        {
+            List<TimeSheet> timeSheetsToSend = GetTimeSheets(employee);
+
+            using (SqlConnection connection = new SqlConnection(loginInformation))
+            {
+                try
+                {
+                    SqlCommand insertTimeSheet = new SqlCommand("spInsertTimeSheet", connection)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    foreach (TimeSheet timeSheet in timeSheetsToSend)
+                    {
+                        //insertTimeSheet.Parameters.AddWithValue();
+                    }
+                }
+                catch (SqlException exception)
+                {
+                    Console.WriteLine(exception.Message);
+                    throw;
+                }
+            }
+        }
+
+        private List<TimeSheet> GetTimeSheets(Employee employee)
+        {
+            List<TimeSheet> resultList = new List<TimeSheet>();
+            foreach (Case caseCase in _cases)
+            {
+                resultList.Add(caseCase.GetTimeSheet(employee));
+            }
+
+            return resultList;
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace HHS
         private EmployeeRepo _employeeRepo = new EmployeeRepo("Server=EALSQL1.eal.local; Database = B_DB30_2018; User Id = B_STUDENT30; Password = B_OPENDB30;"); 
         public void SendTimeSheets()
         {
-           // workerBillable.SendTimeSheets();
+            _caseRepo.SendTimeSheets(_employee, _connectionString);
         }
 
         public List<KeyValuePair<int, string>> GetCaseList()

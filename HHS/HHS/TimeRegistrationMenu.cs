@@ -368,7 +368,9 @@ namespace HHS
 
         private void SendTimeSheets()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Ønsker du at indsende dine timesedler?");
+
+            _controller.SendTimeSheets();
         }
     }
 }
