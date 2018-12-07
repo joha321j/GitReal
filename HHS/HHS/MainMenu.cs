@@ -11,12 +11,12 @@ namespace HHS
     class MainMenu : IMenu
     {
         private readonly Controller _controller;
-        private TimeRegistrationMenu timeRegistrationMenu;
+        private TimeRegistrationMenu _timeRegistrationMenu;
 
         public MainMenu()
         {
             _controller = new Controller();
-            timeRegistrationMenu = new TimeRegistrationMenu(_controller);
+            _timeRegistrationMenu = new TimeRegistrationMenu(_controller);
         }
         /// <summary>
         /// Show the menu and handle the user choice.
@@ -29,7 +29,7 @@ namespace HHS
 
             while (running)
             {
-                showMenu();
+                ShowMenu();
                 string userInput = Console.ReadLine();
 
                 switch (userInput)
@@ -38,7 +38,7 @@ namespace HHS
                         running = false;
                         break;
                     case "1":
-                        timeRegistrationMenu.Show();
+                        _timeRegistrationMenu.Show();
                         break;
                     case "2":
                         CreateNewStandardCase();
@@ -70,7 +70,7 @@ namespace HHS
         /// <summary>
         /// Print the menu to the console.
         /// </summary>
-        private void showMenu()
+        private void ShowMenu()
         {
             Console.Clear();
             Console.WriteLine("Hovedmenu");

@@ -12,7 +12,7 @@ namespace TimeRegistrationLibrary
         public Address CustomerAddress { get; }
 
         private readonly List<KeyValuePair<int, string>> _workTypeList;
-        private readonly List<TimeSheet> timeSheets;
+        private readonly List<TimeSheet> _timeSheets;
 
         public Case(Address customerAddress, string customerName, string customerEmail, List<KeyValuePair<int, string>> workTypeList)
         {
@@ -34,7 +34,7 @@ namespace TimeRegistrationLibrary
 
         public Case(int caseId, string caseName, string customerName, string customerEmail, Address customerAddress, List<KeyValuePair<int, string>> workTypeList)
         {
-            timeSheets = new List<TimeSheet>();
+            _timeSheets = new List<TimeSheet>();
             CaseId = caseId;
             CaseName = caseName;
             CustomerName = customerName;
@@ -50,11 +50,11 @@ namespace TimeRegistrationLibrary
 
         public TimeSheet GetTimeSheet(Employee employee)
         {
-            TimeSheet timeSheetToReturn = timeSheets.Find(timeSheet => timeSheet.EmployeeId == employee.EmployeeId);
+            TimeSheet timeSheetToReturn = _timeSheets.Find(timeSheet => timeSheet.EmployeeId == employee.EmployeeId);
             if (timeSheetToReturn == null)
             {
                 timeSheetToReturn = new TimeSheet(employee.EmployeeId, _workTypeList);
-                timeSheets.Add(timeSheetToReturn);
+                _timeSheets.Add(timeSheetToReturn);
             }
             return timeSheetToReturn;
         }

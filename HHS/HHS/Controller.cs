@@ -10,11 +10,11 @@ namespace HHS
 {
     class Controller
     {
-        private Employee employee;
-        private Case caseToUse;
-        private static string connectionString = "Server=EALSQL1.eal.local; Database = B_DB30_2018; User Id = B_STUDENT30; Password = B_OPENDB30; MultipleActiveResultSets=True;";
-        private CaseRepo caseRepo = new CaseRepo(connectionString);
-        private EmployeeRepo employeeRepo = new EmployeeRepo("Server=EALSQL1.eal.local; Database = B_DB30_2018; User Id = B_STUDENT30; Password = B_OPENDB30;"); 
+        private Employee _employee;
+        private Case _caseToUse;
+        private static string _connectionString = "Server=EALSQL1.eal.local; Database = B_DB30_2018; User Id = B_STUDENT30; Password = B_OPENDB30; MultipleActiveResultSets=True;";
+        private CaseRepo _caseRepo = new CaseRepo(_connectionString);
+        private EmployeeRepo _employeeRepo = new EmployeeRepo("Server=EALSQL1.eal.local; Database = B_DB30_2018; User Id = B_STUDENT30; Password = B_OPENDB30;"); 
         public void SendTimeSheets()
         {
            // workerBillable.SendTimeSheets();
@@ -22,53 +22,53 @@ namespace HHS
 
         public List<KeyValuePair<int, string>> GetCaseList()
         {
-           return caseRepo.GetCaseNameAndId();
+           return _caseRepo.GetCaseNameAndId();
         }
 
         public List<Employee> GetListOfUsers()
         {
-            return employeeRepo.GetEmployeeList();
+            return _employeeRepo.GetEmployeeList();
         }
 
         public void SetEmployee(List<Employee> employeeList, int userChoice)
         {
-            employee = employeeList[userChoice - 1];
+            _employee = employeeList[userChoice - 1];
         }
 
         public void ChooseCase(int caseId)
         {
-            caseToUse = caseRepo.GetCase(caseId);
+            _caseToUse = _caseRepo.GetCase(caseId);
         }
 
         public List<KeyValuePair<int, string>> GetWorkTypeList()
         {
-            return caseToUse.GetWorkTypeList();
+            return _caseToUse.GetWorkTypeList();
         }
 
         internal void CreateNewStandardCase(string caseName, int custoId, int addressId)
         {
-            int id = caseRepo.CreateNewStandardCase(caseName,custoId,addressId,connectionString);
-            caseRepo.addStandardWorkTypes(id,connectionString);
+            int id = _caseRepo.CreateNewStandardCase(caseName,custoId,addressId,_connectionString);
+            _caseRepo.AddStandardWorkTypes(id,_connectionString);
         }
 
         public string GetCaseName()
         {
-            return caseToUse.CaseName;
+            return _caseToUse.CaseName;
         }
 
         public void EnterWorkHours(double userInput, KeyValuePair<int, string> workType)
         {
-            caseToUse.EnterWorkHours(workType, userInput, employee);
+            _caseToUse.EnterWorkHours(workType, userInput, _employee);
         }
 
         internal TimeSheet GetTimeSheet()
         {
-            return caseToUse.GetTimeSheet(employee);
+            return _caseToUse.GetTimeSheet(_employee);
         }
 
         internal void EnterWorkComment(string userComment)
         {
-            caseToUse.EnterWorkComment(userComment, employee);
+            _caseToUse.EnterWorkComment(userComment, _employee);
         }
     }
 }

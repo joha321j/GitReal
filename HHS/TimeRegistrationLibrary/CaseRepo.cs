@@ -8,7 +8,7 @@ namespace TimeRegistrationLibrary
 {
     public class CaseRepo
     {
-        private List<Case> cases = new List<Case>();
+        private List<Case> _cases = new List<Case>();
         private List<KeyValuePair<int, string>> _standardWorkTypeList = new List<KeyValuePair<int, string>>()
         {
             new KeyValuePair<int, string>(1,"Andet"),
@@ -22,7 +22,7 @@ namespace TimeRegistrationLibrary
             UpdateCaseRepo(loginInformation);
         }
 
-        public void addStandardWorkTypes(int id, string connectionString)
+        public void AddStandardWorkTypes(int id, string connectionString)
         {
             try
             {
@@ -43,6 +43,7 @@ namespace TimeRegistrationLibrary
             }
             catch (Exception e)
             {
+                /// TODO: Actually handle the exception!
                 throw e;
             }
         }
@@ -76,7 +77,7 @@ namespace TimeRegistrationLibrary
 
             }
             catch (Exception)
-            {
+            { // TODO: Actually handle the exception in some way!
 
                 throw;
             }
@@ -92,7 +93,7 @@ namespace TimeRegistrationLibrary
         {
             List<KeyValuePair<int, string>> caseNameIdPairs = new List<KeyValuePair<int, string>>();
 
-            foreach (Case caseCase in cases)
+            foreach (Case caseCase in _cases)
             {
                 KeyValuePair<int, string> valuePair = new KeyValuePair<int, string>(caseCase.CaseId, caseCase.CaseName);
                 caseNameIdPairs.Add(valuePair);
@@ -107,25 +108,13 @@ namespace TimeRegistrationLibrary
         /// <returns></returns>
         public Case GetCase(int caseId)
         {
-            return cases.Find(caseToFind => caseToFind.CaseId == caseId);
+            return _cases.Find(caseToFind => caseToFind.CaseId == caseId);
         }
 
         /// <summary>
         /// Create new case.
         /// </summary>
-        /// <param name="customerName"></param>
-        /// <param name="customerEmail"></param>
-        /// <param name="customerAddress"></param>
-        //public void Createcase(int caseid, string casename, string customername, string customeremail, Address customeraddress)
-        //{
-        //    Case newcase = new Case(caseid, casename, customername, customeremail, customeraddress, _standardWorkTypeList);
-
-        //    AddCase(newcase);
-        //}
-
-        /// <summary>
-        /// Create new case.
-        /// </summary>
+        /// <param name="caseId"></param>
         /// <param name="caseName"></param>
         /// <param name="customerName"></param>
         /// <param name="customerEmail"></param>
@@ -143,9 +132,14 @@ namespace TimeRegistrationLibrary
         /// <param name="caseToAdd"></param>
         private void AddCase(Case caseToAdd)
         {
-            cases.Add(caseToAdd);
+            _cases.Add(caseToAdd);
         }
 
+        /// <summary>
+        /// Connect to the database given in loginInformation,
+        /// and update the caseRepo with all the cases in the database.
+        /// </summary>
+        /// <param name="loginInformation"></param>
         private void UpdateCaseRepo(string loginInformation)
         {
             try
