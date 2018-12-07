@@ -98,7 +98,7 @@ namespace HHS
         private KeyValuePair<int, string> ShowAndSelectWorkType(out bool keepRunning)
         {
             List<KeyValuePair<int, string>> workTypeList = _controller.GetWorkTypeList();
-            ShowWorkTypes(workTypeList);
+            ShowWorkTypes();
             return SelectWorkType(workTypeList, out keepRunning);
         }
 
@@ -106,7 +106,7 @@ namespace HHS
         /// Prints the KeyValuePair list.
         /// </summary>
         /// <param name="workTypeList"></param>
-        private void ShowWorkTypes(List<KeyValuePair<int, string>> workTypeList)
+        private void ShowWorkTypes()
         {
             Console.Clear();
             PrintTop();
