@@ -54,7 +54,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="ClassDiagram1.cd" />
-    <None Include="Graph1.dgml" />
+    <None Include="DCD.dgml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TimeRegistrationLibrary\TimeRegistrationLibrary.csproj">
