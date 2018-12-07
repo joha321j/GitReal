@@ -25,7 +25,7 @@ namespace TimeRegistrationLibrary
 
         public override string ToString()
         {
-            return ((CompanyPosition)PositionInCompany).ToString() +  " - " + Name;
+            return PositionInCompany +  " - " + Name;
         }
     }
 }
