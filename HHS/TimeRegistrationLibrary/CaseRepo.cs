@@ -76,10 +76,9 @@ namespace TimeRegistrationLibrary
                 }
 
             }
-            catch (Exception)
-            { // TODO: Actually handle the exception in some way!
-
-                throw;
+            catch (Exception e)
+            {
+                Console.WriteLine("Something goofed" + e.Message);
             }
             return output;
 
