@@ -58,8 +58,21 @@ namespace HHS
             Console.WriteLine("Angiv et navn på sagen: ");
             string caseName = Console.ReadLine();
             Console.WriteLine("Angiv et kunde nummer");
+            foreach (var item in _controller.GetAllCustomers())
+            {
+                Console.WriteLine("Kundens id: {0}  Navn: {1}", item.Key,item.Value);
+            }
+            Console.WriteLine("Tryk 0 for at oprette en ny kunde");           
             int.TryParse(Console.ReadLine(), out int custoId);
             Console.WriteLine("Angiv en Adresse");
+
+            foreach (var item in _controller.GetallCustomersAddresses(custoId))
+            {
+                Console.WriteLine("Addresse id: {0}  Addresse: {1}", item.Key, item.Value);
+            }
+            Console.WriteLine("Tryk 0 for at oprette en ny addresse til kunden");
+
+
             int.TryParse(Console.ReadLine(), out int addressId);
 
             _controller.CreateNewStandardCase(caseName, custoId, addressId);
