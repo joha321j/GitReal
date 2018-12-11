@@ -61,7 +61,6 @@ namespace TimeRegistrationLibrary
                     insertNewCase.Parameters.AddWithValue("@CustomerId", custoId);
                     insertNewCase.Parameters.AddWithValue("@CaseName", caseName);
                     insertNewCase.Parameters.AddWithValue("@Case_AddressId", addressId);
-                    insertNewCase.ExecuteScalar();
 
                     using (SqlDataReader reader = insertNewCase.ExecuteReader())
                     {
