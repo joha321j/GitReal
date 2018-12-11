@@ -21,13 +21,19 @@ namespace TimeRegistrationLibrary
         
         internal int EmployeeId { get; }
 
+        internal int CaseId { get; }
+
         internal List<Work> WorkList;
         internal string Comment { get; set; }
 
-        public TimeSheet(int employeeId, List<KeyValuePair<int, string>> workTypes)
+        internal DateTime Date { get; }
+
+        public TimeSheet(int caseId, int employeeId, List<KeyValuePair<int, string>> workTypes)
         {
+            CaseId = caseId;
             EmployeeId = employeeId;
             WorkList = new List<Work>();
+            Date = DateTime.Today;
             foreach (KeyValuePair<int, string> workType in workTypes)
             {
                 Work workToAdd = new Work(workType);

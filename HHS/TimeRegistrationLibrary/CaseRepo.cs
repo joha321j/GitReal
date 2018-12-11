@@ -232,9 +232,29 @@ namespace TimeRegistrationLibrary
                         CommandType = CommandType.StoredProcedure
                     };
 
+                    SqlCommand insertWork = new SqlCommand("spInsertWork", connection)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
                     foreach (TimeSheet timeSheet in timeSheetsToSend)
                     {
-                        //insertTimeSheet.Parameters.AddWithValue();
+                        insertTimeSheet.Parameters.AddWithValue("@EmployeeId", timeSheet.EmployeeId);
+                        insertTimeSheet.Parameters.AddWithValue("@Comment", timeSheet.Comment);
+                        insertTimeSheet.Parameters.AddWithValue("@Date", timeSheet.Date);
+                        insertTimeSheet.ExecuteNonQuery();
+                        insertTimeSheet.Parameters.Clear();
+                        foreach (TimeSheet.Work work in timeSheet.WorkList)
+                        {
+                            insertWork.Parameters.AddWithValue("@Hours", work.Hours);
+                            insertWork.Parameters.AddWithValue("@Block", work.Block);
+                            insertWork.Parameters.AddWithValue("@workTypeId", work.WorkType.Key);
+
+                            insertWork.ExecuteNonQuery();
+
+                            insertWork.Parameters.Clear();
+                        }
+                        
                     }
                 }
                 catch (SqlException exception)

@@ -35,7 +35,7 @@ namespace TimeRegistrationLibrary
 
         public Case(int caseId, string caseName, string customerName, string customerEmail, Address customerAddress, List<KeyValuePair<int, string>> workTypeList)
         {
-            _timeSheets = new List<TimeSheet>();
+            _timeSheets = new List<TimeSheet>(caseId);
             CaseId = caseId;
             CaseName = caseName;
             CustomerName = customerName;
@@ -54,7 +54,7 @@ namespace TimeRegistrationLibrary
             TimeSheet timeSheetToReturn = _timeSheets.Find(timeSheet => timeSheet.EmployeeId == employee.EmployeeId);
             if (timeSheetToReturn == null)
             {
-                timeSheetToReturn = new TimeSheet(employee.EmployeeId, _workTypeList);
+                timeSheetToReturn = new TimeSheet(CaseId, employee.EmployeeId, _workTypeList);
                 _timeSheets.Add(timeSheetToReturn);
             }
             return timeSheetToReturn;
