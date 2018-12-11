@@ -363,6 +363,9 @@ namespace HHS
                     case "3":
                         SendTimeSheetsMenu();
                         break;
+                    case "4":
+                        ShowRegisteredTimeSheets();
+                        break;
                     default:
                         Console.WriteLine("Ugyldigt valg.");
                         Console.ReadLine();
@@ -380,6 +383,7 @@ namespace HHS
             Console.WriteLine("1. Indtast timer");
             Console.WriteLine("2. Se antal registrerede timer.");
             Console.WriteLine("3. Send timeseddel");
+            Console.WriteLine("4. Vis indsendte timesedler");
             Console.WriteLine();
             Console.WriteLine("0. Vend tilbage til hovedmenu.");
         }
@@ -417,6 +421,7 @@ namespace HHS
             try
             {
                 _controller.SendTimeSheets();
+                Console.WriteLine("Du har nu indsendt dine timesedler!");
             }
             catch (EmployeeHourNormNotFulfilledException e)
             {
@@ -424,6 +429,17 @@ namespace HHS
             }
         }
 
+        private void ShowRegisteredTimeSheets()
+        {
+            List<string> listToShow = _controller.GetRegisteredTimeSheets();
+
+            foreach (string timeSheet in listToShow)
+            {
+                Console.WriteLine(timeSheet);
+            }
+
+            Console.ReadKey();
+        }
         private void ShowTotalHoursRegisteredForEmployee()
         {
             double totalHours = _controller.GetTotalHoursRegisteredForEmployee();

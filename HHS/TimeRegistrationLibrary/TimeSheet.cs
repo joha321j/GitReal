@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace TimeRegistrationLibrary
 {
@@ -77,6 +79,49 @@ namespace TimeRegistrationLibrary
                 sum += work.Hours;
             }
             return sum;
+        }
+
+        public static List<string> GetRegisteredTimeSheets(string connectionString)
+        {
+            List<string> timeSheets = new List<string>();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                try
+                {
+                    SqlCommand getTimeSheets = new SqlCommand("spGetTimeSheets", connection)
+                    {
+                        CommandType = CommandType.StoredProcedure
+
+                    };
+
+                    using (SqlDataReader reader = getTimeSheets.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string employeeName = reader.GetString(0);
+                            string caseName = reader.GetString(1);
+                            string workType = reader.GetString(2);
+                            int block = reader.GetInt32(3);
+                            double hours = reader.GetDouble(4);
+                            string comment = reader[5].ToString();
+                            DateTime date = reader.GetDateTime(6);
+                            string timeSheetString = employeeName + " " + caseName + " " + workType + " "
+                                                     + block + " " + hours + " " + comment + " " + date.Date.ToShortDateString();
+
+                            timeSheets.Add(timeSheetString);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+                
+            }
+
+            return timeSheets;
         }
     }
 }

@@ -86,6 +86,13 @@ namespace HHS
         {
             return _caseRepo.GetTotalHoursRegisteredForEmployee(_employee);
         }
+
+        public List<string> GetRegisteredTimeSheets()
+        {
+            List<string> timeSheets = TimeSheet.GetRegisteredTimeSheets(_connectionString);
+
+            return timeSheets;
+        }
     }
 }
     
