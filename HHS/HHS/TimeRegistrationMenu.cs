@@ -387,13 +387,15 @@ namespace HHS
         private void SendTimeSheetsMenu()
         {
             bool running = true;
-            Console.Clear();
-            Console.WriteLine("Ønsker du at indsende dine timesedler?");
-            Console.WriteLine("1. Ja");
-            Console.WriteLine("0. Vend tilbage til timeregistreringsmenuen.");
+            
 
             do
             {
+                Console.Clear();
+                Console.WriteLine("Ønsker du at indsende dine timesedler?");
+                Console.WriteLine("1. Ja");
+                Console.WriteLine("0. Vend tilbage til timeregistreringsmenuen.");
+
                 switch (Console.ReadLine())
                 {
                     case "1":

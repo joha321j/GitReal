@@ -12,7 +12,7 @@ namespace TimeRegistrationLibrary
         public Address CustomerAddress { get; }
 
         private readonly List<KeyValuePair<int, string>> _workTypeList;
-        private readonly List<TimeSheet> _timeSheets;
+        private readonly List<TimeSheet> _timeSheets = new List<TimeSheet>();
 
 
         //public Case(Address customerAddress, string customerName, string customerEmail, List<KeyValuePair<int, string>> workTypeList)
@@ -35,7 +35,6 @@ namespace TimeRegistrationLibrary
 
         public Case(int caseId, string caseName, string customerName, string customerEmail, Address customerAddress, List<KeyValuePair<int, string>> workTypeList)
         {
-            _timeSheets = new List<TimeSheet>(caseId);
             CaseId = caseId;
             CaseName = caseName;
             CustomerName = customerName;

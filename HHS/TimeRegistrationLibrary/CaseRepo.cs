@@ -215,7 +215,10 @@ namespace TimeRegistrationLibrary
             foreach (TimeSheet timeSheet in timeSheetsToSend)
             {
                 totalHours += timeSheet.GetTotalHours();
+
             }
+
+            timeSheetsToSend.RemoveAll(timeSheet => timeSheet.GetTotalHours() < 0.0001);
 
             if (totalHours < employee.HourNorm)
             {
@@ -226,6 +229,7 @@ namespace TimeRegistrationLibrary
             {
                 try
                 {
+                    connection.Open();
                     SqlCommand insertTimeSheet = new SqlCommand("spInsertTimeSheet", connection)
                     {
                         CommandType = CommandType.StoredProcedure
@@ -238,13 +242,22 @@ namespace TimeRegistrationLibrary
 
                     foreach (TimeSheet timeSheet in timeSheetsToSend)
                     {
+                        int timeSheetId = 0;
+                        insertTimeSheet.Parameters.AddWithValue("@CaseId", timeSheet.CaseId);
                         insertTimeSheet.Parameters.AddWithValue("@EmployeeId", timeSheet.EmployeeId);
                         insertTimeSheet.Parameters.AddWithValue("@Comment", timeSheet.Comment);
                         insertTimeSheet.Parameters.AddWithValue("@Date", timeSheet.Date);
-                        insertTimeSheet.ExecuteNonQuery();
-                        insertTimeSheet.Parameters.Clear();
+
+                        using (SqlDataReader reader = insertTimeSheet.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                timeSheetId = reader.GetInt32(0);
+                            }
+                        }
                         foreach (TimeSheet.Work work in timeSheet.WorkList)
                         {
+                            insertWork.Parameters.AddWithValue("@TimeSheetId", timeSheetId);
                             insertWork.Parameters.AddWithValue("@Hours", work.Hours);
                             insertWork.Parameters.AddWithValue("@Block", work.Block);
                             insertWork.Parameters.AddWithValue("@workTypeId", work.WorkType.Key);
@@ -253,7 +266,7 @@ namespace TimeRegistrationLibrary
 
                             insertWork.Parameters.Clear();
                         }
-                        
+                        insertTimeSheet.Parameters.Clear();
                     }
                 }
                 catch (SqlException exception)

@@ -24,7 +24,7 @@ namespace TimeRegistrationLibrary
         internal int CaseId { get; }
 
         internal List<Work> WorkList;
-        internal string Comment { get; set; }
+        internal string Comment { get; set; } = " ";
 
         internal DateTime Date { get; }
 
