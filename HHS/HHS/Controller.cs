@@ -14,6 +14,7 @@ namespace HHS
         private Case _caseToUse;
         private static string _connectionString = "Server=EALSQL1.eal.local; Database = B_DB30_2018; User Id = B_STUDENT30; Password = B_OPENDB30; MultipleActiveResultSets=True;";
         private readonly CaseRepo _caseRepo = new CaseRepo(_connectionString);
+        private readonly CustomerRepo _custoRepo = new CustomerRepo();
         private readonly EmployeeRepo _employeeRepo = new EmployeeRepo("Server=EALSQL1.eal.local; Database = B_DB30_2018; User Id = B_STUDENT30; Password = B_OPENDB30;"); 
         internal void SendTimeSheets()
         {
@@ -51,9 +52,19 @@ namespace HHS
             _caseRepo.AddStandardWorkTypes(id,_connectionString);
         }
 
+        internal List<KeyValuePair<int,string>> GetAllCustomers()
+        {
+            return _custoRepo.GetallCustomers(_connectionString);
+        }
+
         internal string GetCaseName()
         {
             return _caseToUse.CaseName;
+        }
+
+        internal List<KeyValuePair<int, string>> GetallCustomersAddresses(int custoId)
+        {
+            return _custoRepo.GetallCustomersAddresses(custoId, _connectionString);
         }
 
         internal void EnterWorkHours(double userInput, int userInputBlock, KeyValuePair<int, string> workType)
