@@ -78,6 +78,7 @@ namespace HHS
             _controller.CreateNewStandardCase(caseName, custoId, addressId);
 
             Console.WriteLine("Din sag er nu oprettet");
+            Console.ReadKey();
         }
 
         /// <summary>
