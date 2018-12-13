@@ -15,6 +15,10 @@
             City = city;
         }
 
+        /// <summary>
+        /// Returns all of the address properties in one string.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return StreetName + " " + StreetNumber + " " + PostCode + " " + City;
