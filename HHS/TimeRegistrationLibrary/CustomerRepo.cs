@@ -11,6 +11,11 @@ namespace TimeRegistrationLibrary
 {
     public class CustomerRepo
     {
+        /// <summary>
+        /// Connects to the database and makes a list of all customers.
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
         public List<KeyValuePair<int,string>> GetallCustomers(string connectionString)
         {
             List<KeyValuePair<int, string>> listOfcustomers = new List<KeyValuePair<int, string>>();
@@ -39,6 +44,12 @@ namespace TimeRegistrationLibrary
             }
         }
 
+        /// <summary>
+        /// Connects to the database and makes a list of all addresses for the given customerId
+        /// </summary>
+        /// <param name="custoId"></param>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
         public List<KeyValuePair<int, string>> GetallCustomersAddresses(int custoId, string connectionString)
         {
             List<KeyValuePair<int, string>> listOfcustomersAddresses = new List<KeyValuePair<int, string>>();

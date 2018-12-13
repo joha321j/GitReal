@@ -184,6 +184,9 @@ namespace HHS
             }
         }
 
+        /// <summary>
+        /// Prints the top of the timesheet.
+        /// </summary>
         private void PrintTop()
         {
             string title = @"  _______  _      _                         _       _                     _               
@@ -197,6 +200,9 @@ namespace HHS
             Console.WriteLine(title);
         }
 
+        /// <summary>
+        /// Prints the date and week part of the timesheet.
+        /// </summary>
         private void PrintDateAndWeek()
         {
             DateTime today = DateTime.Now;
@@ -211,6 +217,11 @@ namespace HHS
             Console.WriteLine(bar);
         }
 
+        /// <summary>
+        /// Returns the weeknumbeer for the current day.
+        /// </summary>
+        /// <param name="today"></param>
+        /// <returns></returns>
         private static int GetIso8601WeekOfYear(DateTime today)
         {
             DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(today);
@@ -221,6 +232,11 @@ namespace HHS
             return CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(today, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
         }
 
+        /// <summary>
+        /// Checks the weeknumber and adjusts timesheet look.
+        /// </summary>
+        /// <param name="weekNumber"></param>
+        /// <returns></returns>
         private string CheckWeekNumberLength(int weekNumber)
         {
             if (weekNumber < 10)
@@ -233,6 +249,9 @@ namespace HHS
             }
         }
 
+        /// <summary>
+        /// Prints the casename part of the timesheet.
+        /// </summary>
         private void PrintCaseName()
         {
             string bar = @"+--------------------------------+------+-------+";
@@ -244,6 +263,11 @@ namespace HHS
             Console.WriteLine(bar);
         }
 
+        /// <summary>
+        /// Checks the casename's length and adjusts timesheet look.
+        /// </summary>
+        /// <param name="caseName"></param>
+        /// <returns></returns>
         private string EnsureNameLength(string caseName)
         {
             string result = string.Empty;
@@ -255,6 +279,9 @@ namespace HHS
             return result;
         }
 
+        /// <summary>
+        /// Prints the worktype part of the timesheet.
+        /// </summary>
         private void PrintWorkTypes()
         {
             TimeSheet timeSheet = _controller.GetTimeSheet();
@@ -276,6 +303,11 @@ namespace HHS
             }
         }
 
+        /// <summary>
+        /// Checks the worktype length and adjusts timesheet look.
+        /// </summary>
+        /// <param name="workType"></param>
+        /// <returns></returns>
         private string EnsureWorkTypeLength(KeyValuePair<int, string> workType)
         {
             string result;
@@ -287,6 +319,9 @@ namespace HHS
             return result;
         }
 
+        /// <summary>
+        /// Prints the comemnt area of the timesheet.
+        /// </summary>
         private void PrintCommentArea()
         {
             TimeSheet timeSheet = _controller.GetTimeSheet();
@@ -312,6 +347,11 @@ namespace HHS
             }
         }
 
+        /// <summary>
+        /// Checks the comments length and adjusts timesheet look.
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns></returns>
         private List<string> EnsureCommentWrapping(string comment)
         {
             string[] words = comment.Split(' ');
@@ -327,6 +367,9 @@ namespace HHS
             return lines;
         }
 
+        /// <summary>
+        /// Prints total hours area of the timesheet.
+        /// </summary>
         private void PrintTotalHours()
         {
             string bar = @"+---------------------+-------------------------+";
@@ -339,6 +382,9 @@ namespace HHS
 
         }
 
+        /// <summary>
+        /// Creates the timeregistration menu's cases.
+        /// </summary>
         public void Show()
         {
             bool running = true;
@@ -374,6 +420,9 @@ namespace HHS
             }
         }
 
+        /// <summary>
+        /// Writes the timeregistration menu to the console.
+        /// </summary>
         private void ShowMenu()
         {
             Console.Clear();
@@ -388,6 +437,9 @@ namespace HHS
             Console.WriteLine("0. Vend tilbage til hovedmenu.");
         }
 
+        /// <summary>
+        /// Wirtes the SendTimeSheet menu and asks if you want to send your timesheet.
+        /// </summary>
         private void SendTimeSheetsMenu()
         {
             bool running = true;
@@ -416,6 +468,9 @@ namespace HHS
             } while (running);
         }
 
+        /// <summary>
+        /// Tries to send the timesheets and warns user if they don't have enough hours.
+        /// </summary>
         private void SendTimeSheets()
         {
             try
@@ -429,6 +484,9 @@ namespace HHS
             }
         }
 
+        /// <summary>
+        /// Shows a list of all registered timesheets.
+        /// </summary>
         private void ShowRegisteredTimeSheets()
         {
             List<string> listToShow = _controller.GetRegisteredTimeSheets();
@@ -440,6 +498,9 @@ namespace HHS
 
             Console.ReadKey();
         }
+        /// <summary>
+        /// Shows total amount of hours of wrok from unsent timesheets. 
+        /// </summary>
         private void ShowTotalHoursRegisteredForEmployee()
         {
             double totalHours = _controller.GetTotalHoursRegisteredForEmployee();

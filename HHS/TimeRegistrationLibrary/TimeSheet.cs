@@ -30,6 +30,12 @@ namespace TimeRegistrationLibrary
 
         internal DateTime Date { get; }
 
+        /// <summary>
+        /// Constructs a timesheet.
+        /// </summary>
+        /// <param name="caseId"></param>
+        /// <param name="employeeId"></param>
+        /// <param name="workTypes"></param>
         public TimeSheet(int caseId, int employeeId, List<KeyValuePair<int, string>> workTypes)
         {
             CaseId = caseId;
@@ -44,6 +50,12 @@ namespace TimeRegistrationLibrary
            
         }
 
+        /// <summary>
+        /// Adds the inputted hours to the work.
+        /// </summary>
+        /// <param name="workType"></param>
+        /// <param name="userInput"></param>
+        /// <param name="userInputBlock"></param>
         public void EnterWorkHours(KeyValuePair<int, string> workType, double userInput, int userInputBlock)
         {
             Work work = GetWork(workType.Key);
@@ -51,26 +63,49 @@ namespace TimeRegistrationLibrary
             work.Hours += userInput;
         }
 
+        /// <summary>
+        /// Returns the given work.
+        /// </summary>
+        /// <param name="workTypeKey"></param>
+        /// <returns></returns>
         private Work GetWork(int workTypeKey)
         {
             return WorkList.Find(work => work.WorkType.Key == workTypeKey);
         }
 
+        /// <summary>
+        /// Returns the block number for given worktype.
+        /// </summary>
+        /// <param name="workType"></param>
+        /// <returns></returns>
         public int GetBlockForWorkType(KeyValuePair<int, string> workType)
         {
             return WorkList.Find(work => work.WorkType.Key == workType.Key).Block;
         }
 
+        /// <summary>
+        /// Returns 5hours registered for the given worktype.
+        /// </summary>
+        /// <param name="workType"></param>
+        /// <returns></returns>
         public double GetHoursRegisteredForWorkType(KeyValuePair<int, string> workType)
         {
             return WorkList.Find(work => work.WorkType.Key == workType.Key).Hours;
         }
 
+        /// <summary>
+        /// Returns the comment.
+        /// </summary>
+        /// <returns></returns>
         public string GetComment()
         {
             return Comment;
         }
 
+        /// <summary>
+        /// Returns the sum of all hours.
+        /// </summary>
+        /// <returns></returns>
         public double GetTotalHours()
         {
             double sum = 0;
@@ -81,6 +116,11 @@ namespace TimeRegistrationLibrary
             return sum;
         }
 
+        /// <summary>
+        /// Connects to the database and returns a list of all registered timesheets.
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
         public static List<string> GetRegisteredTimeSheets(string connectionString)
         {
             List<string> timeSheets = new List<string>();

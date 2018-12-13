@@ -10,6 +10,10 @@ namespace TimeRegistrationLibrary
     public class EmployeeRepo
     {
         private readonly List<Employee> _employees = new List<Employee>();
+        /// <summary>
+        /// Connects to the database and adds all employees to a list.
+        /// </summary>
+        /// <param name="loginInformation"></param>
         public EmployeeRepo(string loginInformation)
         {
             try
@@ -43,6 +47,10 @@ namespace TimeRegistrationLibrary
             }
         }
 
+        /// <summary>
+        /// Returns a list of all employees.
+        /// </summary>
+        /// <returns></returns>
         public List<Employee> GetEmployeeList()
         {
             return _employees;

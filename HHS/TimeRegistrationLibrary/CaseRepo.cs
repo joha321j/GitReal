@@ -22,6 +22,11 @@ namespace TimeRegistrationLibrary
             UpdateCaseRepo(loginInformation);
         }
 
+        /// <summary>
+        /// Connects to the database and inserts the standard worktypes for a given caseid.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="connectionString"></param>
         public void AddStandardWorkTypes(int id, string connectionString)
         {
             try
@@ -48,6 +53,14 @@ namespace TimeRegistrationLibrary
             }
         }
 
+        /// <summary>
+        /// Connects to the database and adds the given parametres.
+        /// </summary>
+        /// <param name="caseName"></param>
+        /// <param name="custoId"></param>
+        /// <param name="addressId"></param>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
         public int CreateNewStandardCase(string caseName, int custoId, int addressId, string connectionString)
         {
             int output = 0;
@@ -276,6 +289,11 @@ namespace TimeRegistrationLibrary
             }
         }
 
+        /// <summary>
+        /// Gets a list of timesheets for the given employee.
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <returns></returns>
         private List<TimeSheet> GetTimeSheets(Employee employee)
         {
             List<TimeSheet> resultList = new List<TimeSheet>();
@@ -287,6 +305,11 @@ namespace TimeRegistrationLibrary
             return resultList;
         }
 
+        /// <summary>
+        /// returns the total hours registered for the given employee.
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <returns></returns>
         public double GetTotalHoursRegisteredForEmployee(Employee employee)
         {
             double totalHours = 0;
