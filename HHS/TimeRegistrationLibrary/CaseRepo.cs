@@ -192,8 +192,7 @@ namespace TimeRegistrationLibrary
                                 }
 
                                 CreateCase(reader.GetInt32(4), reader[5].ToString(), reader[6].ToString(), reader[7].ToString(), caseAddress, workTypeList);
-                                getWorkTypeOfCases.Parameters.Clear();
-                                //workTypeList.Clear();
+                                getWorkTypeOfCases.Parameters.Clear();                               
                             }
 
                         }
