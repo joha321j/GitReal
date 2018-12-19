@@ -95,7 +95,8 @@ namespace TimeRegistrationLibrary
         /// <param name="userInputBlock"></param>
         /// <param name="userInput"></param>
         /// <param name="employee"></param>
-        public void EnterWorkHours(KeyValuePair<int, string> workType, int userInputBlock, double userInput, Employee employee)
+        public void EnterWorkHours(KeyValuePair<int, string> workType, int userInputBlock,
+            double userInput, Employee employee)
         {
             TimeSheet timeSheetForEmployee = GetTimeSheet(employee);
 
