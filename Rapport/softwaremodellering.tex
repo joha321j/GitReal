@@ -23,7 +23,7 @@ En DCD for timeregistreringsbiblioteket kan ses i på figur \ref{fig:DCDLib} på
     \label{fig:DCDMenu}
 \end{figure}
 
-\subsection{Systensekvensdiagram modellering(SSD)}
+\subsection{Systensekvensdiagram(SSD) modellering}
 
 Ud fra use casen beskrevet i afsnit \ref{ssec:usecase} har vi lavet følgende systemsekvensdiagram, der beskriver, hvordan en tømrer skal bruge systemet. SSD'en kan ses på figur \ref{fig:SSDMain}.
 
@@ -34,7 +34,7 @@ Dette hjælper os med at forstå, hvordan systemet skal implementeres, blandt an
     \label{fig:SSDMain}
 \end{figure}
 
-\subsection{Softwareoperationskontrakt modellering(SOC)}
+\subsection{Softwareoperationskontrakt(SOC) modellering}
 
 Det næste skridt for at gå fra virksomhedens problem til at kode en løsning er at lave en SOC, der beskriver, hvordan tilstandene i systemet ændrer sig, når det bruges.
 
@@ -65,7 +65,7 @@ For samme use case har vi også lavet følgende SOC:
 
 Her kan det ses, at systemets tilstand skal ændres, da der skal tilføjes timer til den sag, der er valgt.
 
-\subsection{Sekvensdiagram modellering (SD)}
+\subsection{Sekvensdiagram(SD) modellering}
 
 Et godt værktøj til at visualisere, hvordan programmets klasser skal arbejde sammen er ved et SD.
 
@@ -73,7 +73,7 @@ Når brugeren vælger at indtaste timer for en given worktype, bliver han spurgt
 
 Timeregistreringsmenuen kalder controller objektet, der kalder det givne case objekt, der finder timesheetet for brugeren, og tilføjer antal timer brugt.
 Hvis brugeren har valgt worktypen med key værdi på 1, har han valgt arbejdstypen "andet", og derfor skal der tilføjes en kommentar.
-\begin{sidewaysfigure}[h]
+\begin{sidewaysfigure}
     \centering
         \includegraphics[scale = .6]{SDEnterWorkHours.png}
     \caption{SD for EnterWorkHours metoden.}
@@ -81,5 +81,13 @@ Hvis brugeren har valgt worktypen med key værdi på 1, har han valgt arbejdstyp
 \end{sidewaysfigure}
 
 \subsection{Kode modellering}
+
+Som det kan ses på figur \ref{fig:SDEnterWorkHours} kalder timeregistreringsmenuobjektet controllens EnterWorkHours metode.
+
+\begin{figure}[H]
+    \makebox[\textwidth][c]{\includegraphics[scale = .8]{ControllerEnterWorkHours.png}}
+    \caption{Kodeuddrag for controllerens EnterWorkHours metode}
+    \label{fig:SDEnterWorkHours}
+\end{figure}
 
 
