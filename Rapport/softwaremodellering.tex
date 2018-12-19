@@ -40,7 +40,7 @@ Det næste skridt for at gå fra virksomhedens problem til at kode en løsning e
 
 For use casen \textbf{registrering af timer}, beskrevet i afsnit \ref{ssec:usecase} og SSD'en set på figur \ref{fig:SSDMain}, har vi udledt følgende SOC'er:
 
-\textbf{Operation:} ShowcaseList()
+\textbf{Operation:} ShowCaseList()
 
 \textbf{Cross Reference:} Use case: Registering af Timer.
 
@@ -59,7 +59,7 @@ For samme use case har vi også lavet følgende SOC:
 
 \textbf{Cross Reference:} Use case: Registering af Timer.
 
-\textbf{Pre condition:} Der er blevet valgt en sag.
+\textbf{Pre condition:} Der er blevet valgt en sag, og en ansat er logget ind.
 
 \textbf{Post condition:} Timer er blevet tilføjet til sagen.
 
@@ -73,21 +73,40 @@ Når brugeren vælger at indtaste timer for en given worktype, bliver han spurgt
 
 Timeregistreringsmenuen kalder controller objektet, der kalder det givne case objekt, der finder timesheetet for brugeren, og tilføjer antal timer brugt.
 Hvis brugeren har valgt worktypen med key værdi på 1, har han valgt arbejdstypen "andet", og derfor skal der tilføjes en kommentar.
-\begin{sidewaysfigure}
-    \centering
-        \includegraphics[scale = .6]{SDEnterWorkHours.png}
-    \caption{SD for EnterWorkHours metoden.}
-    \label{fig:SDEnterWorkHours}
-\end{sidewaysfigure}
-
-\subsection{Kode modellering}
-
-Som det kan ses på figur \ref{fig:SDEnterWorkHours} kalder timeregistreringsmenuobjektet controllens EnterWorkHours metode.
-
 \begin{figure}[H]
-    \makebox[\textwidth][c]{\includegraphics[scale = .8]{ControllerEnterWorkHours.png}}
-    \caption{Kodeuddrag for controllerens EnterWorkHours metode}
+    \makebox[\textwidth][c]{\includegraphics[scale = .6]{SDEnterWorkHours.png}}
+    \caption{SD for EnterWorkHours metoden.}
     \label{fig:SDEnterWorkHours}
 \end{figure}
 
+\subsection{Kode modellering}
+
+Som det kan ses på figur \ref{fig:ControllerEnterWorkHours} kalder timeregistreringsmenuobjektet controllens EnterWorkHours metode.
+
+\begin{figure}[H]
+    \makebox[\textwidth][c]{\includegraphics[scale = .8]{ControllerEnterWorkHours.png}}
+    \caption{Kodeuddrag for controllers EnterWorkHours metode}
+    \label{fig:ControllerEnterWorkHours}
+\end{figure}
+
+Denne metode kalder derefter den case, der arbejdes på, hvor den kalder dens EnterWorkHours metode, som kan ses på figur \ref{fig:CaseEnterWorkHours}.
+Denne metode blandt andet en employee.
+Den bruger denne employee til først at finde det timesheet, der en den employees, hvorefter den kalder timesheetets EnterWorkHours metode.
+
+\begin{figure}[H]
+    \makebox[\textwidth][c]{\includegraphics[scale = .8]{CaseEnterWorkHours.png}}
+    \caption{Kodeuddrag for cases EnterWorkHours metode}
+    \label{fig:CaseEnterWorkHours}
+\end{figure}
+
+Til sidst tager timesheets EnterWorkHour metode og finder den worktype, som employeen har udført og sætter blokken til at være den, der er angivet, og derefter tilføjer den antallet af timer til Hours propertien. Dette kan ses i figur \ref{fig:TimeSheetEnterWorkHours}.
+
+\begin{figure}[H]
+    \makebox[\textwidth][c]{\includegraphics[scale = .8]{TimeSheetEnterWorkHours.png}}
+    \caption{Kodeuddrag for timesheets EnterWorkHours metode}
+    \label{fig:TimeSheetEnterWorkHours}
+\end{figure}
+
+På denne måde bliver antallet af timer, som brugeren giver programmet, tilføjet til den valgte arbejdstype for en sag.
+Dette stemmer overens med SOC'en for EnterWorkHours, der siger, at post conditionen skal være, at timer er blevet tilføjet til sagen.
 

@@ -56,7 +56,8 @@ namespace TimeRegistrationLibrary
         /// <param name="workType"></param>
         /// <param name="userInput"></param>
         /// <param name="userInputBlock"></param>
-        public void EnterWorkHours(KeyValuePair<int, string> workType, double userInput, int userInputBlock)
+        public void EnterWorkHours(KeyValuePair<int, string> workType,
+            double userInput, int userInputBlock)
         {
             Work work = GetWork(workType.Key);
             work.Block = userInputBlock;
