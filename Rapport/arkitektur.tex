@@ -1,15 +1,15 @@
-\section{Hvordan får man SQL og C\# til at arbejde sammen?}
+\section{Hvordan får man SQL og C\# til at arbejde sammen?}\label{arkitektur}
 
 Vores program taler sammen med en database, da det skal kunne gemme data fra en svend på en byggeplads, som sekretæren hjemme på kontoret skal kunne tilgå.
 
 Derfor er det nødvendigt, at vores program kan tale sammen med databasen beskrevet i afsnit \ref{databasemodellering}.
 
-Programmet taler sammen med databasen beskrevet i \ref{databasemodellering} ved hjælp af C\# biblioteket System.Data.SqlClient.\cite{sqlclient}
-Dette bibliotek giver os adgang til en masse metoder og klasser. Deriblandt SqlConnection klassen.
+Programmet taler sammen med databasen ved hjælp af C\# biblioteket System.Data.SqlClient.\cite{sqlclient}
+Dette bibliotek giver os adgang til en masse metoder og klasser, deriblandt SqlConnection klassen.
 Klassen repræsenterer en forbindelse mellem programmet og en SQL server.
-Derfor skal dens construktor tage de nødvendige loginoplysninger: Serveren, hvilken database på serveren, og til sidst brugerens ID og kodeord.
+Derfor skal dens constructor tage de nødvendige loginoplysninger: Serveren, hvilken database på serveren, og til sidst brugerens ID og kodeord.
 
-SqlConnection har en metode, der hedder Open(), der åbner forbindelsen til databasen, som er specificeret i SqlConnection construktoren.
+SqlConnection har en metode, der hedder Open(), der åbner forbindelsen til databasen, som er specificeret i SqlConnection constructor.
 
 \subsection{Hvordan henter vi sager fra databasen?}
 
@@ -24,10 +24,10 @@ UpdateCaseRepo tager som parameter en string.
 Denne string indeholder login informationer til den database vi bruger, dette kan ses på linje 154.
 
 Det første vi gør er, at vi bruger en try og catch på SqlConnection, for at se om vi kan lave en forbindele til databasen med den string, metoden bruger.
-Hvis den ikke kan lave en SqlConnection fanger catchen den exeception, der bliver smidt ud.
+Hvis den ikke kan lave en SqlConnection fanger catch statementet den exeception, der bliver smidt ud.
 I linje 158 bruges der keyworded \textit{using}, som sørger at lukke Sqlconnection igen efter den er færdig med at bruge den, ellers skal metoden Close() bruges for at lukke forbindelen.
 
-Using gør, at det objekt der står inde paranteserne kun findes i den følgende kodeblok, ved at den nedlægger objektet ved at kalde en Dispose metode, når kodeblokken er eksekveret.
+Using gør, at det objekt, der står inde paranteserne, kun findes i den følgende kodeblok, ved at den nedlægger objektet ved at kalde objektets Dispose() metode, når kodeblokken er eksekveret.
 Derfor skal det objekt, der bruges i using udtrykket implementere IDisposable interfacet.\cite{using}
 
 Efter forbindelsen er blevet åbnet med metoden Open() i linje 162, bliver der lavet to SqlCommands (getAllCasesSqlcommand og getWorkTypeOfCases) fra linje 165 til 169.
@@ -37,7 +37,7 @@ I linje 173 bliver der brugt en ny using, hvor der bliver oprettet og eksekveret
 Efterfølgende bruges der et while loop, som kører hele readeren igennem med metoden Read().
 Dette sker på linje 177.
 Hver gang reader.Read() bliver kørt bliver der indlæst en række fra databasen ind i reader.
-Man tilgår dataen i reader objektet som når data i et array tilgåes.
+Man tilgår dataen i reader objektet som data i et array.
 Inde i dette while loop på linje 179 bliver der oprettet en ny liste workTypeList, som er af typen KeyValuePair.
 En list af typen KeyValuePair bruges når man gerne vil associere en nøgle med en værdi.
 Dette gør det nemmere at finde ting i listen hvis vi ved hvad nøglen er.
