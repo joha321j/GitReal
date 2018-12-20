@@ -1,6 +1,4 @@
-\section{Arkitektur}
-
-\subsection{Hvordan får man SQL og C\# til at arbejde sammen?}
+\section{Hvordan får man SQL og C\# til at arbejde sammen?}
 
 Vores program taler sammen med en database, da det skal kunne gemme data fra en svend på en byggeplads, som sekretæren hjemme på kontoret skal kunne tilgå.
 
@@ -13,8 +11,7 @@ Derfor skal dens construktor tage de nødvendige loginoplysninger: Serveren, hvi
 
 SqlConnection har en metode, der hedder Open(), der åbner forbindelsen til databasen, som er specificeret i SqlConnection construktoren.
 
-
-\subsection{UpdateCaseRepo}
+\subsection{Hvordan henter vi sager fra databasen?}
 
 \begin{figure}[H]
     \makebox[\textwidth][c]{\includegraphics[scale = 0.9]{UpdateCaseRepo.PNG}}
@@ -27,7 +24,7 @@ UpdateCaseRepo tager som parameter en string.
 Denne string indeholder login informationer til den database vi bruger, dette kan ses på linje 154.
 
 Det første vi gør er, at vi bruger en try og catch på SqlConnection, for at se om vi kan lave en forbindele til databasen med den string, metoden bruger.
-Hvis den ikke kan lave en SqlConnection fanger catchen den exeception, der blive smidt ud.
+Hvis den ikke kan lave en SqlConnection fanger catchen den exeception, der bliver smidt ud.
 I linje 158 bruges der keyworded \textit{using}, som sørger at lukke Sqlconnection igen efter den er færdig med at bruge den, ellers skal metoden Close() bruges for at lukke forbindelen.
 
 Using gør, at det objekt der står inde paranteserne kun findes i den følgende kodeblok, ved at den nedlægger objektet ved at kalde en Dispose metode, når kodeblokken er eksekveret.
