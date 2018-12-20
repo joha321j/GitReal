@@ -28,7 +28,7 @@ Hvis den ikke kan lave en SqlConnection fanger catch statementet den exeception,
 I linje 158 bruges der keyworded \textit{using}, som sørger at lukke Sqlconnection igen efter den er færdig med at bruge den, ellers skal metoden Close() bruges for at lukke forbindelen.
 
 Using gør, at det objekt, der står inde paranteserne, kun findes i den følgende kodeblok, ved at den nedlægger objektet ved at kalde objektets Dispose() metode, når kodeblokken er eksekveret.
-Derfor skal det objekt, der bruges i using udtrykket implementere IDisposable interfacet.\cite{using}
+Derfor skal det objekt, der bruges i using udtrykket implementere IDisposable interfacet.\cite{using} IDispoable interfacet siger, at klassen skal have en pæn måde at ryde op efter sig selv i form af Dispose() metoden.\cite{idisposable}
 
 Efter forbindelsen er blevet åbnet med metoden Open() i linje 162, bliver der lavet to SqlCommands (getAllCasesSqlcommand og getWorkTypeOfCases) fra linje 165 til 169.
 Disse to refererer til de to stored procedures med samme navn, som er beskrevet nærmere i afsnit \ref{databasemodellering}.
