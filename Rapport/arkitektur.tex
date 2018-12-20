@@ -26,5 +26,7 @@ Før den næste Sqlcommand getWorkTypeOfCases kan blive kørt skal der oprettets
 Fra linje 181 til 183 bliver der instansers et nyt address objekt, som får værdier fra SqlDataReader reader fra index 0 til og med index 4.
 
 
-Til sidste før at loopet bliver kørt igen bliver der oprettet et nyt case objeckt, men de resterende outputs fra  getWorkTypeOfCases og de nye objekter der er blevet lavet.
-For at kunne blive ved at bruge de samme parametre er man nød til at bruge metoden Clear() til sidste for ellers kan man ikke oprette en ny parameter med samme navn den den allerede eksistere.
+Efter dette bliver da lavet en ny SqlDataReader som kommer hedder workTypeReader, men før at vi kan eksekvere to readers i samme connection skal vi tilføje en ekstra parameter til vores loginInformation string på linje 154, som er \textit{MultipleActiveResultSets=True}. Inde i denne her reader bliver der oprettet og tilføjet nye KeyValuePairs til listen på linje 179.
+
+Til sidste før at loopet bliver kørt igen bliver der oprettet et nyt case objeckt, men de resterende outputs fra getWorkTypeOfCases og det nye objekt caseAddress på linje 182 og den listen der er blevet oprettet med SqlDataReader workTypeReader.
+For at kunne blive ved at bruge de samme parametre er man nød til at bruge metoden Clear() til sidste for ellers kan der ikke blive oprette en ny parameter med samme navn da den allerede eksistere.
