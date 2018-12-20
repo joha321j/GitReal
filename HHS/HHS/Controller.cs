@@ -16,7 +16,7 @@ namespace HHS
         private Employee _employee;
         private Case _caseToUse;
         private static string _connectionString = "Server=EALSQL1.eal.local; Database = B_DB30_2018; User Id = B_STUDENT30; Password = B_OPENDB30; MultipleActiveResultSets=True;";
-        private readonly CaseRepo _caseRepo = new CaseRepo(_connectionString);
+        private readonly CaseRepo _caseRepo = new  CaseRepo(_connectionString);
         private readonly CustomerRepo _custoRepo = new CustomerRepo();
         private readonly EmployeeRepo _employeeRepo = new EmployeeRepo("Server=EALSQL1.eal.local; Database = B_DB30_2018; User Id = B_STUDENT30; Password = B_OPENDB30;"); 
         /// <summary>
