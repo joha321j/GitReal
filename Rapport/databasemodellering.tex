@@ -4,7 +4,7 @@ I projektet gør vi brug af en database, som er udleveret fra UCL. Den er strukt
 
 
 
-Vi har valgt at gøre brug af en database til vores projekt både for at lære at bruge SQL, men også for at håndtere data, som skal bruges senere uden, at det mistes når programmet slukkes, og skal kunne tilgåes på andre maskiner end den, der har indsat dataen.
+Vi har valgt at gøre brug af en database til vores projekt både for at lære at bruge SQL, men også for at håndtere data, som skal bruges senere, uden at det mistes, når programmet slukkes, og skal kunne tilgåes på andre maskiner end den, der har indsat dataen.
 
 \begin{figure}[H]
     \makebox[\textwidth][c]{\includegraphics[scale = .8]{Database.png}}
@@ -12,15 +12,15 @@ Vi har valgt at gøre brug af en database til vores projekt både for at lære a
     \label{fig:DatabaseDiagram}
 \end{figure}
 
-I figur \ref{fig:DatabaseDiagram} ses et oversigt over databasen for HHS.
+I figur \ref{fig:DatabaseDiagram} ses en oversigt over databasen for HHS.
 Der er lavet otte tabeller, som alle overholder den tredje normaliserings form. \cite{Database}
-Dette kan for eksempel ses ved, at vi havde en mange til mange relation mellem WORKTYPE og REL\_CASE og derfor var vi nød til at lave et ekstra table, som kom til at hede CASE\_WORKTYPE, der sørger at dette ikke at tilfældet, da der derved skabes en en til mange relation fra WORKTYPE og CASE\_WORKTYPE og fra REL\_CASE til CASE\_WORKTYPE.
+Dette kan for eksempel ses ved, at vi havde en mange til mange relation mellem WORKTYPE og REL\_CASE og derfor var vi nød til at lave en ekstra tabel, som kom til at hede CASE\_WORKTYPE, der sørger at dette ikke at tilfældet, da der derved skabes en en til mange relation fra WORKTYPE og CASE\_WORKTYPE og fra REL\_CASE til CASE\_WORKTYPE.
 
 \subsection{Database procedurer}
 
 \begin{figure}[h]
     \makebox[\textwidth][c]{\includegraphics[scale = .7]{DBSP.PNG}}
-    \caption{viser de stored procedures, som bliver brugt i databasen, som kan ses i figur \ref{fig:DatabaseDiagram}}
+    \caption{Viser de stored procedures, som bliver brugt i databasen, som kan ses i figur \ref{fig:DatabaseDiagram}}
     \label{fig:SP}
 \end{figure}
 
@@ -39,7 +39,7 @@ Til sidst specificeres hvor disse rækker skal hentes fra.
 Til dette bruges kommandoen FROM.
 For at vide, hvor det skal hentes fra bruger vi kommadoerne join og on.
 Join bruges, når man gerne vil ligge to tabeller sammen til en samlet tabel.
-On bliver altid brugt sammen med join da den bestemmer på hvilke parameter tabellerne skal ligges sammen på.
+On bliver altid brugt sammen med join, da den bestemmer, på hvilke parameter tabellerne skal ligges sammen på.
 Join/on bruges hyppigst på at sammenligne primary keys(PK) med foreign keys(FK), som kan ses i figur \ref{fig:DatabaseDiagram}.
 
 \subsubsection{spGetWorkTypesForCase}
@@ -53,6 +53,6 @@ Stored proceduren i figur \ref{fig:SPWORKTYPE} tager samme udgangspunkt som den 
 
 Forskellen er, at denne stored procedure tager en parameter ind som input.
 Denne parameter bliver specificeret oppe ved siden af navnet på proceduren, hvor parameterens navn står, som standard med et \@ tegn foran, og hvilken type den er.
-Når der er valgt, hvad der skal bruges med SELECT, og hvor det er fra med FROM, bliver der til sidste specificert præcis den række vi gerne vil have med kommandoen WHERE.
+Når der er valgt, hvad der skal bruges med SELECT, og hvor det er fra med FROM, bliver der til sidste specificeret præcis den række vi gerne vil have med kommandoen WHERE.
 Her siger vi, at caseId skal være den samme, som parameteren.
 

@@ -1,6 +1,6 @@
 \section{Hvordan får man SQL og C\# til at arbejde sammen?}\label{arkitektur}
 
-Vores program taler sammen med en database, da det skal kunne gemme data fra en svend på en byggeplads, som sekretæren hjemme på kontoret skal kunne tilgå.
+Vores program taler sammen med en database, da det skal kunne gemme data fra en tømrer på en byggeplads, som sekretæren hjemme på kontoret skal kunne tilgå.
 
 Derfor er det nødvendigt, at vores program kan tale sammen med databasen beskrevet i afsnit \ref{databasemodellering}.
 
@@ -15,7 +15,7 @@ SqlConnection har en metode, der hedder Open(), der åbner forbindelsen til data
 
 \begin{figure}[H]
     \makebox[\textwidth][c]{\includegraphics[scale = 0.65]{UpdateCaseRepo.PNG}}
-    \caption{Her vises metoden UpdateCaseRepo, som ligger i classen CaseRepo. Denne metoder henter alle cases med til hørende customers og addresses fra databasen.}
+    \caption{Her vises metoden UpdateCaseRepo, som ligger i classen CaseRepo. Denne metoder henter alle cases med tilhørende customers og addresser fra databasen.}
     \label{fig:UpdateCaseRepo}
 \end{figure}
 
@@ -55,4 +55,4 @@ Til sidst før loopet bliver kørt igen, bliver der oprettet et nyt case objeckt
 For at kunne blive ved med at bruge den stored procedure er man nød til at bruge metoden Clear() til sidst.
 Clear() fjerner parameteren der blev tilføjet på linje 181.
 
-Hvis man ikke laver et kald på Clear() metoden vil linje 181 tilføje endnu en parameter, og der vil derfor ske en fejl, når den stored procedure bliver eksekveret, da den ikke kan tage 2 parametre.
+Hvis man ikke laver et kald på Clear() metoden vil linje 181 tilføje endnu en parameter, og der vil derfor ske en fejl, når den stored procedure bliver eksekveret, da den ikke kan tage to parametre.

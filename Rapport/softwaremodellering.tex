@@ -1,5 +1,5 @@
 \section{Software-Modellering}\label{softwaremodellering}
-
+I dette afsnit bliver modeller  for projektets software vist og forklaret.
 \subsection{Designklassediagram(DCD)}
 
 På baggrund af objekt og domænemodellerne, se afsnit \ref{businessmodellering}, har vi udarbejdet en DCD, der skal hjælpe os med at give overblik over arkitekturen i programmet.
@@ -11,7 +11,7 @@ Det har været en stor hjælp til at finde ud af, hvilke dele af programmet skal
 Internt i gruppen har DCD'en også været meget omdiskuteret, da den har tydeliggjort de softwarearkitektokniske valg og minimeret interne misforståelser.
 
 
-På figur \ref{fig:DCDMenu} kan DCD'en for vores 2 menu klasser, menu interfacet og controller klassen ses.
+På figur \ref{fig:DCDMenu} kan DCD'en for vores to menu klasser, menu interfacet og controller klassen ses.
 Vi har valgt at opbygge programmet således, at vi har menuer, der kender til en controller klasse.
 Denne controller klasse forbinder med et timeregistreringsbibliotek, der indeholder alt logikken for vores timeregistreringssystem.
 
@@ -69,7 +69,7 @@ Her kan det ses, at systemets tilstand skal ændres, da der skal tilføjes timer
 
 Et godt værktøj til at visualisere, hvordan programmets klasser skal arbejde sammen er ved et SD.
 
-Når brugeren vælger at indtaste timer for en given worktype, bliver han spurgt om at vælge block, og derfeter hvor mange timer han har brugt på worktypen.
+Når brugeren vælger at indtaste timer for en given worktype, bliver han spurgt om at vælge block, og derefter hvor mange timer han har brugt på worktypen.
 
 Timeregistreringsmenuen kalder controller objektet, der kalder det givne case objekt, der finder timesheetet for brugeren, og tilføjer antal timer brugt.
 Hvis brugeren har valgt worktypen med key værdi på 1, har han valgt arbejdstypen "andet", og derfor skal der tilføjes en kommentar.
