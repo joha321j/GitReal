@@ -68,8 +68,7 @@ namespace TimeRegistrationLibrary
         /// <returns></returns>
         public TimeSheet GetTimeSheet(Employee employee)
         {
-            TimeSheet timeSheetToReturn =
-                _timeSheets.Find(timeSheet => timeSheet.EmployeeId == employee.EmployeeId);
+            TimeSheet timeSheetToReturn = _timeSheets.Find(timeSheet => timeSheet.EmployeeId == employee.EmployeeId);
             if (timeSheetToReturn == null)
             {
                 timeSheetToReturn = new TimeSheet(CaseId, employee.EmployeeId, _workTypeList);

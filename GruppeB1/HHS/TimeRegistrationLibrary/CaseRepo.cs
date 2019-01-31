@@ -131,8 +131,7 @@ namespace TimeRegistrationLibrary
         /// <param name="customerEmail"></param>
         /// <param name="customerAddress"></param>
         /// <param name="workTypeList"></param>
-        private void CreateCase(int caseId, string caseName,string customerName,
-            string customerEmail, Address customerAddress, List<KeyValuePair<int, string>> workTypeList)
+        private void CreateCase(int caseId, string caseName, string customerName, string customerEmail, Address customerAddress, List<KeyValuePair<int, string>> workTypeList)
         {
             Case newStandardCase = new Case(caseId, caseName, customerName, customerEmail, customerAddress, workTypeList);
 
@@ -192,9 +191,7 @@ namespace TimeRegistrationLibrary
                                     }
                                 }
 
-                                CreateCase(reader.GetInt32(4), reader[5].ToString(), reader[6].ToString(),
-                                    reader[7].ToString(), caseAddress, workTypeList);
-
+                                CreateCase(reader.GetInt32(4), reader[5].ToString(), reader[6].ToString(), reader[7].ToString(), caseAddress, workTypeList);
                                 getWorkTypeOfCases.Parameters.Clear();                               
                             }
 
